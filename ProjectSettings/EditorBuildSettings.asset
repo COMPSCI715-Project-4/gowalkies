@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/ARFondation/Scenes/ARFoundationMenu/Menu.unity
+    guid: 904110ab8cef14f7d96c56ca20774e5a
+  - enabled: 0
+    path: Assets/ARFondation/Scenes/SimpleAR/SimpleAR.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 0
+    path: Assets/2. Implementation/MainPage/MainMenu.unity
+    guid: 1af32ee259eeb40d99841167cdd14fb0
+  - enabled: 1
+    path: Assets/3. Implementation/IntensityTest/IntensityTestScene.unity
+    guid: 6c65a614ce701437ca88c2d471029640
+  - enabled: 0
+    path: Assets/2. Implementation/MainPage/ChoiceScene.unity
+    guid: 0916ba4c56bd747c9a297e03c12c0ba7
+  - enabled: 0
+    path: Assets/2. Implementation/MainPage/GameScene.unity
+    guid: 65989b6827200403387bbbb7108fa4cf
+  - enabled: 0
+    path: Assets/2. Implementation/LoginPage/LoginScene.unity
+    guid: b2f1b289034fc4f1b9ffdfade3b7f22e
+  - enabled: 0
+    path: Assets/2. Implementation/SocialStanding/SocialStandingScene.unity
+    guid: d745ebc1f02ee7948886b1e342bb2d34
+  - enabled: 0
+    path: Assets/2. Implementation/Evolution/EvolutionScene.unity
+    guid: b9bec0cb972c84fce941e26d440419a1
+  m_configObjects:
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: f8ce26fe3bc69499b9be4b2378e97a94,
+      type: 2}
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 98c79e8cc22674a89a95a3a90e2b70cb,
+      type: 2}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 302e9f36808117f4184b07b05ca5bb47,
+      type: 2}
+    com.unity.xr.arkit.PlayerSettings: {fileID: 11400000, guid: 2d5fb8e61571b4e3897f221189089fd6,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e2f869774b12e400996eb546603602e3,
+      type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 7cde33adb1ce545e4b5bfed756295384,
+      type: 2}
