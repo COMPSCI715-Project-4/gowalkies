@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI; 
-using TMPro; 
+using TMPro;
+using PedometerU.Tests;
 
 public class TImer : MonoBehaviour
 {
@@ -19,13 +20,15 @@ public class TImer : MonoBehaviour
     private Text seperator;
 
     [SerializeField]
-    private bool countDown;
-
-    [SerializeField]
     private Text steps;
 
+    public static int TimerCurrentStep;
+
     [SerializeField]
-    private GameObject NotificationPanel;
+    private bool countDown;
+
+    //[SerializeField]
+    //private GameObject NotificationPanel;
 
     private float flashTimer;
     private float flashDuration = 1f;
@@ -36,10 +39,10 @@ public class TImer : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
-    {
-        ResetTimer();
-    }
+    //void Start()
+    //{
+    //    ResetTimer();
+    //}
 
     // Update is called once per frame
     void Update()
@@ -48,11 +51,13 @@ public class TImer : MonoBehaviour
         {
             timer -= Time.deltaTime;
             UpdateTimerDisplay(timer);
+
         }
         else if (!countDown && timer < timeDuration)
         {
             timer += Time.deltaTime;
             UpdateTimerDisplay(timer);
+
 
         }
         else 
@@ -61,7 +66,7 @@ public class TImer : MonoBehaviour
         }
     }
 
-    private void ResetTimer()
+    public void ResetTimer()
     {
         if (countDown)
         {
@@ -89,28 +94,20 @@ public class TImer : MonoBehaviour
         float minutes = Mathf.FloorToInt(time / 60);
         float seconds = Mathf.FloorToInt(time % 60);
 
-        if (seconds % 20 == 0)
-        {
-            if (minutes != 0)
-            {
-                int currentStep = int.Parse(steps.text);
-                int actualStepTake = currentStep - previousAmount;
-                previousAmount = currentStep;
-                if (actualStepTake < averageSteps)
-                {
-                    NotificationPanel.SetActive(true);
-                    
-                }
-            }
-        }
-
         string currrentTime = string.Format("{00:00}{1:00}", minutes, seconds);
         firstMinute.text = currrentTime[0].ToString();
         secondMinute.text = currrentTime[1].ToString();
         firstSecond.text = currrentTime[2].ToString();
         secondSecond.text = currrentTime[3].ToString();
-        steps.text = currrentTime[2].ToString() + currrentTime[3].ToString();
-        
+        TimerCurrentStep = (int)time;
+        steps.text = TimerCurrentStep.ToString();
+
+        if (timer % 20 == 0)
+        {
+            Debug.Log("20 seconds pass"); 
+        }
+
+ 
 
 
     }
@@ -127,6 +124,7 @@ public class TImer : MonoBehaviour
         {
             timer = timeDuration;
             UpdateTimerDisplay(timer);
+
         }
 
         if(flashTimer <= 0)

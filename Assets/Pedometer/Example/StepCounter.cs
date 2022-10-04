@@ -12,6 +12,7 @@ namespace PedometerU.Tests {
 
         public Text stepText, distanceText;
         private Pedometer pedometer;
+        public static int currentSteps;
 
         private void Start () {
             // Create a new pedometer
@@ -23,13 +24,19 @@ namespace PedometerU.Tests {
         private void OnStep (int steps, double distance) {
             // Display the values // Distance in feet
             stepText.text = steps.ToString();
-            distanceText.text = (distance * 3.28084).ToString("F2") + " ft";
+            distanceText.text = (Mathf.Round((float)distance)).ToString();
+            currentSteps = steps;
         }
 
         private void OnDisable () {
             // Release the pedometer
             pedometer.Dispose();
             pedometer = null;
+        }
+
+        public int GetSteps()
+        {
+            return currentSteps;
         }
     }
 }

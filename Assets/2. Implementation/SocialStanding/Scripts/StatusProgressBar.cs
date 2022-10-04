@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UIWidgets;
+using PedometerU.Tests;
 
 public class StatusProgressBar : MonoBehaviour
 {
@@ -13,8 +14,16 @@ public class StatusProgressBar : MonoBehaviour
     public float timer = 0.01f;
     public float max;
     private bool fill = true;
-    private bool paused = false;
+    private bool paused = true;
     private float initialMax;
+    // Step average variables
+    private int steps = 0;
+    public float stepAverageGoal = 28 / 20;
+    public int timeframe = 20;
+    private bool increase = false;
+    private bool decrease = false;
+    private float stepAverage;
+    private StepCounter stepCounter;
 
     List<string> statusNames = new List<string> { "Pet Newbie", "Pet Lover", "Pet Master", "Pet Legend" };
     private List<string> unlocked = new List<string> { "Pet Newbie" };
@@ -31,32 +40,51 @@ public class StatusProgressBar : MonoBehaviour
 
     private void Start()
     {
-        currentStatus = 0;
         initialMax = max;
+        currentStatus = 0;
         statusText.text = statusNames[currentStatus];
         statusesUnlocked.ClearOptions();
         statusesUnlocked.AddOptions(unlocked);
-
+        stepAverage = stepAverageGoal;
+        stepCounter = GetComponent<StepCounter>();
         Timer();
-        //max = 30;
     }
 
     private void Update()
     {
+        steps = stepCounter.GetSteps();
+
+        // Testing purposes
         if (Input.GetKeyDown(KeyCode.RightArrow))
-            fill = true;
+            stepAverage = stepAverageGoal;
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            fill = false;
-            paused = false;
-        }
-            
+            stepAverage = 0;
 
         if (timer < max && keepTiming)
         {
+            // We ignore the first timeframe and check if the time is a multiple of the timeframe e.g. 20
+            if ((int)timer % timeframe == 0)
+            {
+                stepAverage = steps / timeframe;
+                if (stepAverage >= stepAverageGoal)
+                {
+                    fill = true;
+                    increase = true;
+                    decrease = false;
+                }
+                else if (stepAverage < stepAverageGoal)
+                {
+                    fill = false;
+                    decrease = true;
+                    increase = false;
+                }
+            }
+            if (increase)
+                progressSlider.value = timer / max;
+            else if (decrease)
+                progressSlider.value = timer / max;
             Timer();
-            progressSlider.value = timer / max;
-            if (progressSlider.value == 0 && currentStatus != 0)
+            if (progressSlider.value == 0 && currentStatus != 0 && timer <= 0)
                 ResetTimer();
         }
         else if (currentStatus == 3 && fill != false)
@@ -64,10 +92,8 @@ public class StatusProgressBar : MonoBehaviour
             timer = max - 0.01f;
             paused = true;
         }
-        else
-        {
+        else if (timer >= max)
             ResetTimer();
-        }
     }
 
     public void Timer()
@@ -94,6 +120,7 @@ public class StatusProgressBar : MonoBehaviour
 
     public void ResetTimer()
     {
+        timer = 0.01f;
         keepTiming = false;
         notifyPad.SetActive(true);
 
@@ -140,7 +167,6 @@ public class StatusProgressBar : MonoBehaviour
         if (fill == true)
         {
             max *= 2;
-            timer = 0.01f;
             if (currentStatus < 4)
                 currentStatus++;
             statusText.text = statusNames[currentStatus];
@@ -154,7 +180,6 @@ public class StatusProgressBar : MonoBehaviour
         else if (fill == false)
         {
             max = initialMax;
-            timer = 0.01f;
             // Reset all statuses as options for the dropdown menu
             statusesUnlocked.ClearOptions();
             List<string> m_DropOptions = new List<string> { statusNames[0] };
@@ -165,5 +190,7 @@ public class StatusProgressBar : MonoBehaviour
                 currentStatus = 0;
             statusText.text = statusNames[currentStatus];
         }
+        fill = true;
+        stepAverage = stepAverageGoal;
     }
 }

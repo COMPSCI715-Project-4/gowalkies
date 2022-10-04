@@ -27,7 +27,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void BackButtonPressed()
         {
-            Debug.Log("back Btn Pressed");
             if (Application.CanStreamedLevelBeLoaded("MainMenu"))
                 SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UIWidgets;
+using PedometerU.Tests;
 
 public class EvolutionProgressBar : MonoBehaviour
 {
@@ -12,8 +13,16 @@ public class EvolutionProgressBar : MonoBehaviour
     public float timer = 0.01f;
     public float max;
     private bool fill = true;
-    private bool paused = false;
+    private bool paused = true;
     private float initialMax = 10;
+    // Step average variables
+    private int steps = 0;
+    public float stepAverageGoal = 28;
+    public int timeframe = 20;
+    private bool increase = false;
+    private bool decrease = false;
+    private float stepAverage;
+    private StepCounter stepCounter;
 
     private bool keepTiming = true;
     public GameObject notifyPad;
@@ -24,36 +33,69 @@ public class EvolutionProgressBar : MonoBehaviour
     public Text evolutionLevelText;
     public Text keepStatusText;
     public Text lossStatusText;
-    private float timePassed = 0f; 
+    
     private GameObject pet;
+
+    private int currentStep;
+
+    private int previousStep = 0; 
 
     private void Start()
     {
         initialMax = max;
         currentEvo = 1;
         pet = GameObject.FindWithTag("pets");
+        stepAverage = stepAverageGoal;
+        stepCounter = GetComponent<StepCounter>();
         Timer();
-        //max = 30;
-
-
     }
 
     private void Update()
     {
+        //steps = 
+        //currentStep = stepCounter.GetSteps();
 
+        currentStep = TImer.TimerCurrentStep;
+
+        // Testing purposes
         if (Input.GetKeyDown(KeyCode.RightArrow))
-            fill = true;
+            stepAverage = stepAverageGoal;
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            fill = false;
-            paused = false;
-        }
+            stepAverage = 0;
 
         if (timer < max && keepTiming)
         {
+            // We ignore the first timeframe and check if the time is a multiple of the timeframe e.g. 20
+            if ((int)timer % timeframe == 0)
+            {
+                //Debug.Log("current step");
+                
+                //Debug.Log(currentStep);
+                //Debug.Log("previous step");
+                //Debug.Log(previousStep);
+                //stepAverage = currentStep - previousStep;
+                //previousStep = currentStep;
+                //Debug.Log("step average");
+                //Debug.Log(stepAverage);
+                if (stepAverage >= stepAverageGoal)
+                {
+                    fill = true;
+                    increase = true;
+                    decrease = false;
+                }
+                else if (stepAverage < stepAverageGoal)
+                {
+                    fill = false;
+                    decrease = true;
+                    increase = false;
+                }
+            }
+            if (increase)
+                progressSlider.value = timer / max;
+            else if (decrease)
+                progressSlider.value = timer / max;
             Timer();
-            progressSlider.value = timer / max;
-            if (progressSlider.value == 0 && currentEvo != 1)
+            if (progressSlider.value == 0 && currentEvo != 1 && timer <= 0)
                 ResetTimer();
         }
         else if (currentEvo == 4 && fill != false)
@@ -61,8 +103,9 @@ public class EvolutionProgressBar : MonoBehaviour
             timer = max - 0.01f;
             paused = true;
         }
-        else
+        else if (timer >= max)
         {
+            //Debug.Log("Here1");
             ResetTimer();
             ChangeSize();
         }
@@ -80,9 +123,7 @@ public class EvolutionProgressBar : MonoBehaviour
             Timer();
         }
         else
-        {
             pet = GameObject.FindWithTag("pets");
-        }
     }
 
     public void Timer()
@@ -109,6 +150,8 @@ public class EvolutionProgressBar : MonoBehaviour
 
     public void ResetTimer()
     {
+        //Debug.Log("Here2");
+        timer = 0.01f;
         keepTiming = false;
         notifyPad.SetActive(true);
 
@@ -154,14 +197,12 @@ public class EvolutionProgressBar : MonoBehaviour
         if (fill == true)
         {
             max *= 2;
-            timer = 0.01f;
             if (currentEvo < 4)
                 currentEvo++;
         }
         else if (fill == false)
         {
             max = initialMax;
-            timer = 0;
             currentEvo = 1;
         }
         evolutionLevelText.text = "Level " + currentEvo;

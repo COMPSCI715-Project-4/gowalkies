@@ -210,6 +210,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74e3b2f610f924c288a3ba7618b4a49b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  min: 0
+  max: 0
+  current: 0
+  mask: {fileID: 935819065}
+  timeText: {fileID: 1443793289}
+  timeIncrese: 0
+  maxTimeLevelUp: 1
 --- !u!1 &125316834
 GameObject:
   m_ObjectHideFlags: 0
@@ -1868,6 +1875,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96eb6f9c97c0f4c92a55f614beef3f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AddBtn: {fileID: 1955357620}
+  CloseBtn: {fileID: 171853247}
+  controller: {fileID: 1739883308}
 --- !u!4 &663204497
 Transform:
   m_ObjectHideFlags: 0
@@ -3693,6 +3703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f4a6699d301d41739f4a6bcbe30cee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sizeSlider: {fileID: 720707534}
 --- !u!1 &968816614
 GameObject:
   m_ObjectHideFlags: 0
@@ -5707,6 +5718,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f8356e0ca0d841ea89c95ca55b07494, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  SitBtn: {fileID: 856700173}
+  StandBtn: {fileID: 799893485}
 --- !u!4 &1538668020
 Transform:
   m_ObjectHideFlags: 0
@@ -6980,7 +6994,7 @@ GameObject:
   - component: {fileID: 1739883311}
   - component: {fileID: 1739883310}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: JoyStickPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7079,6 +7093,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23215be7ca0444070bcfb618d17f903a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  progressSlider: {fileID: 259506702}
+  fillSpeed: 0.5
+  levelText: {fileID: 1443793289}
+  timer: 0
+  notifyPad: {fileID: 2146613841}
+  notifyText: {fileID: 722786911}
+  max: 0
 --- !u!4 &1777316762
 Transform:
   m_ObjectHideFlags: 0
@@ -8234,7 +8255,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2119910824}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d5d499c9f4724938aa54cc87880ff2c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfc8e4d69d73048ef982c8b4a70d1559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Panel: {fileID: 1273865130}

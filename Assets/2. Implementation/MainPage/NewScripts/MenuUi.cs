@@ -5,9 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class MenuUi : MonoBehaviour
 {
+    public void GoToTicketInstructions()
+    {
+        SceneManager.LoadScene("TicketInstructions");
+    }
+
     public void GoToTicketScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void GoToEvoInstructions()
+    {
+        SceneManager.LoadScene("EvoInstructions");
     }
 
     public void GoToEvolutionScene()
@@ -15,20 +25,18 @@ public class MenuUi : MonoBehaviour
         SceneManager.LoadScene("EvolutionScene");
     }
 
+    public void GoToStatusInstructions()
+    {
+        SceneManager.LoadScene("StatusInstructions");
+    }
+
     public void GoToStatusScene()
     {
         SceneManager.LoadScene("SocialStandingScene");
     }
 
-    public void LoadIntensityTestScene()
+    public void GoBackToMainMenu()
     {
-        SceneManager.LoadScene("IntensityTestScene");
+        SceneManager.LoadScene("MainMenu");
     }
-
-    public void LoadLoginScene()
-    {
-        SceneManager.LoadScene("LoginScene");
-    }
-
- 
 }
