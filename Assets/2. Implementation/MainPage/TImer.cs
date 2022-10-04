@@ -36,6 +36,10 @@ public class TImer : MonoBehaviour
     private int previousAmount = 0;
 
 
+    public static int currenStep;
+    public static int previousStep = 0;
+    public static bool reachedAverage;
+
 
 
     // Start is called before the first frame update
@@ -57,8 +61,6 @@ public class TImer : MonoBehaviour
         {
             timer += Time.deltaTime;
             UpdateTimerDisplay(timer);
-
-
         }
         else 
         {
@@ -102,12 +104,20 @@ public class TImer : MonoBehaviour
         TimerCurrentStep = (int)time;
         steps.text = TimerCurrentStep.ToString();
 
-        if (timer % 20 == 0)
+        if ((int)timer % 20 == 0)
         {
-            Debug.Log("20 seconds pass"); 
+            currenStep = (int)timer - previousStep;
+            previousStep = currenStep;
+
+            //Debug.Log("current step"); 
+            //Debug.Log(currenStep);
+            //Debug.Log("previous step");
+
+            //Debug.Log(previousStep); 
         }
 
- 
+
+
 
 
     }

@@ -10,15 +10,17 @@ public class EvolutionProgressBar : MonoBehaviour
     [SerializeField] private Slider progressSlider;
     public float fillSpeed = 0.5f;
     public static int currentEvo;
-    public float timer = 0.01f;
+    [SerializeField]
+    private float timer = 0.01f;
+
     public float max;
     private bool fill = true;
     private bool paused = true;
     private float initialMax = 10;
     // Step average variables
     private int steps = 0;
-    public float stepAverageGoal = 28;
-    public int timeframe = 20;
+    private int stepAverageGoal = 28;
+    private int timeframe = 20;
     private bool increase = false;
     private bool decrease = false;
     private float stepAverage;
@@ -38,7 +40,7 @@ public class EvolutionProgressBar : MonoBehaviour
 
     private int currentStep;
 
-    private int previousStep = 0; 
+    private int previousStep = 0;
 
     private void Start()
     {
@@ -65,11 +67,17 @@ public class EvolutionProgressBar : MonoBehaviour
 
         if (timer < max && keepTiming)
         {
+
             // We ignore the first timeframe and check if the time is a multiple of the timeframe e.g. 20
             if ((int)timer % timeframe == 0)
             {
+                Debug.Log((int)timer);
+                Debug.Log("step average"); 
+                Debug.Log(stepAverage);
+
+
                 //Debug.Log("current step");
-                
+
                 //Debug.Log(currentStep);
                 //Debug.Log("previous step");
                 //Debug.Log(previousStep);
@@ -79,12 +87,14 @@ public class EvolutionProgressBar : MonoBehaviour
                 //Debug.Log(stepAverage);
                 if (stepAverage >= stepAverageGoal)
                 {
+                    stepAverage = 18;
                     fill = true;
                     increase = true;
                     decrease = false;
                 }
                 else if (stepAverage < stepAverageGoal)
                 {
+                    stepAverage = 30;
                     fill = false;
                     decrease = true;
                     increase = false;

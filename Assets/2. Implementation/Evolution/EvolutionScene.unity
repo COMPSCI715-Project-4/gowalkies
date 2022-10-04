@@ -1235,6 +1235,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473176624}
   m_CullTransparentMesh: 1
+--- !u!1 &484963847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 484963849}
+  - component: {fileID: 484963848}
+  m_Layer: 0
+  m_Name: Timer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &484963848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484963847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47cc2ab0385f94d2a9099f1fe28171bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstMinute: {fileID: 1243669490}
+  secondMinute: {fileID: 887635711}
+  firstSecond: {fileID: 781801414}
+  secondSecond: {fileID: 45053231}
+  seperator: {fileID: 848922111}
+  steps: {fileID: 286250518}
+  countDown: 0
+  averageSteps: 0
+--- !u!4 &484963849
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484963847}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1087.6163, y: 1399.3522, z: -23.744528}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &488019494
 GameObject:
   m_ObjectHideFlags: 0
@@ -5693,6 +5745,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 484963848}
+        m_TargetAssemblyTypeName: TImer, Assembly-CSharp
+        m_MethodName: ResetTimer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1346025956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7756,7 +7820,7 @@ MonoBehaviour:
   progressSlider: {fileID: 259506702}
   fillSpeed: 1
   timer: 0
-  max: 40
+  max: 60
   stepAverageGoal: 1
   timeframe: 5
   notifyPad: {fileID: 2146613841}
@@ -7781,7 +7845,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stepText: {fileID: 286250518}
   distanceText: {fileID: 578188422}
-  currentSteps: 0
 --- !u!1 &1780233033
 GameObject:
   m_ObjectHideFlags: 0
