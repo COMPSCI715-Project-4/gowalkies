@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -715,8 +715,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -7.9005127, y: -821.8345}
-  m_SizeDelta: {x: -543.2621, y: -2158.8936}
+  m_AnchoredPosition: {x: -217, y: -937}
+  m_SizeDelta: {x: -784.7294, y: -2284.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &142722764
 MonoBehaviour:
@@ -2304,8 +2304,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -7.9005737, y: -532}
-  m_SizeDelta: {x: -509.2315, y: -2152.0874}
+  m_AnchoredPosition: {x: 214.20541, y: -940.2996}
+  m_SizeDelta: {x: -785.4342, y: -2258.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &493149561
 MonoBehaviour:
@@ -5441,8 +5441,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 695456426910825035, guid: 4ee22c1f54b174122b6a766fe09e0de8,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 24967805}
+    - target: {fileID: 695456426910825035, guid: 4ee22c1f54b174122b6a766fe09e0de8,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 695456426910825035, guid: 4ee22c1f54b174122b6a766fe09e0de8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GoBackToChoiceMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 695456426910825035, guid: 4ee22c1f54b174122b6a766fe09e0de8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuUi, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1104539865941108374, guid: 4ee22c1f54b174122b6a766fe09e0de8,
         type: 3}
@@ -7420,7 +7435,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 2119910828}
         m_TargetAssemblyTypeName: MenuUi, Assembly-CSharp
-        m_MethodName: GoBackToMainMenu
+        m_MethodName: GoBackToChoiceMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11165,8 +11180,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00024414062, y: -639}
-  m_SizeDelta: {x: -227.3527, y: 874.2301}
+  m_AnchoredPosition: {x: 0.00024414062, y: -570.1403}
+  m_SizeDelta: {x: -227.3527, y: 1447.3}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1790910257
 MonoBehaviour:
@@ -11201,10 +11216,12 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Your social standing will get better whenever you fill the progress bar
-    at the top of your screen. \n\nTo fill the bar you must maintain a your step
-    average to the one on screen.\n\nYou can use see your achievement through the
-    prestigiousness of your social standing."
+  m_Text: "You need to walk or step to maintain your step average. To fill the bar
+    you must maintain your step average to the one on the screen.\n\nIf you don't
+    maintain your step average the progress of the bar will decrease. When the progress
+    falls below the bar you will lose all your items. \n\nYour social standing will
+    get better whenever you fill the progress bar at the top of your screen. \n\nYou
+    can use see your achievement through the prestigiousness of your social standing."
 --- !u!222 &1790910258
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13978,10 +13995,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2119910828}
-        m_TargetAssemblyTypeName: MenuUi, Assembly-CSharp
-        m_MethodName: GoBackToMainMenu
-        m_Mode: 1
+      - m_Target: {fileID: 657317978}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -13989,6 +14006,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 878851047}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &2117032292
 MonoBehaviour:

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2418,8 +2418,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -7.9005737, y: -532}
-  m_SizeDelta: {x: -509.2315, y: -2152.0874}
+  m_AnchoredPosition: {x: 171, y: -999.9999}
+  m_SizeDelta: {x: -743.0338, y: -2269.803}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &397415076
 MonoBehaviour:
@@ -3571,8 +3571,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00024414062, y: -639}
-  m_SizeDelta: {x: -227.3527, y: 874.2301}
+  m_AnchoredPosition: {x: 0.00024414062, y: -556.2983}
+  m_SizeDelta: {x: -227.3527, y: 1578.6}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &561929100
 MonoBehaviour:
@@ -3607,10 +3607,16 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "You will gain a ticket whenever you fill the progress bar at the top of
-    your screen. \n\nTo fill the bar you must maintain a your step average to the
-    one on screen.\n\nYou can use the tickets to automatically step for you so that
-    you can rest a little bit."
+  m_Text: "You need to walk or step to maintain your step average. To fill the bar
+    you must maintain your step average to the one on the screen. \n\nIf you don't
+    maintain your step average the progress of the bar will decrease. When the progress
+    falls below the bar you will lose all your items. \n\nTo get a ticket you must
+    fill the bar. Each tickets gives 10, 20, 30, 40 extra steps depending on the
+    ticket level.\n\nClicking the profile button in the top right corner lets you
+    check and use the tickets you've gained.  You can use the tickets during the
+    exergame or after you level up. When tickets are used during game play, it will
+    assist you in your current level and if you use the ticket while you complete
+    a level, it will be used to assist you in you next level play.\r"
 --- !u!222 &561929101
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13022,8 +13028,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -7.9005127, y: -821.8345}
-  m_SizeDelta: {x: -543.2621, y: -2158.8936}
+  m_AnchoredPosition: {x: -222, y: -997}
+  m_SizeDelta: {x: -814.9631, y: -2300.377}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1751707416
 MonoBehaviour:
