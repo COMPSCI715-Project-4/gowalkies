@@ -36,4 +36,6 @@ public class LoginSceneMannager : MonoBehaviour
         loginPage.SetActive(true);
         SignUpPage.SetActive(false); 
     }
+
+    
 }

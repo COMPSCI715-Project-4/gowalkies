@@ -139,11 +139,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             LoadScene("SimpleAR");
         }
 
-        public void GameSceneButtonPressed()
-        {
-            LoadScene("GameScene");
-        }
-
         public void ImageTrackableButtonPressed()
         {
             ActiveMenu.currentMenu = MenuType.ImageTracking;

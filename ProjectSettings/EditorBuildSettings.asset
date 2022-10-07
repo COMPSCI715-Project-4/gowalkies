@@ -5,36 +5,21 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/ARFondation/Scenes/ARFoundationMenu/Menu.unity
-    guid: 904110ab8cef14f7d96c56ca20774e5a
-  - enabled: 0
-    path: Assets/ARFondation/Scenes/SimpleAR/SimpleAR.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: Assets/3. Implementation/IntensityTest/IntensityTestScene.unity
-    guid: 6c65a614ce701437ca88c2d471029640
-  - enabled: 0
+  - enabled: 1
+    path: Assets/2. Implementation/MainPage/MainMenu.unity
+    guid: a55c31a8a86e54b7ab15c52798dafe6d
+  - enabled: 1
     path: Assets/2. Implementation/MainPage/ChoiceScene.unity
     guid: 0916ba4c56bd747c9a297e03c12c0ba7
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: Assets/2. Implementation/LoginPage/LoginScene.unity
-    guid: b2f1b289034fc4f1b9ffdfade3b7f22e
-  - enabled: 0
-    path: Assets/2. Implementation/SocialStanding/SocialStandingScene.unity
-    guid: d745ebc1f02ee7948886b1e342bb2d34
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/2. Implementation/Evolution/EvolutionScene.unity
     guid: cc6ff8b1a9fcf4a4c8359a7bb6814959
+  - enabled: 1
+    path: Assets/2. Implementation/Tickets/TicketScene.unity
+    guid: 6801caf3be6702446802e9877f8c34a5
+  - enabled: 1
+    path: Assets/2. Implementation/SocialStanding/SocialStandingScene.unity
+    guid: d745ebc1f02ee7948886b1e342bb2d34
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: f8ce26fe3bc69499b9be4b2378e97a94,
       type: 2}

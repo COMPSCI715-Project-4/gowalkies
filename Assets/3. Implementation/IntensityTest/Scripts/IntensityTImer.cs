@@ -5,6 +5,7 @@ using TMPro;
 public class IntensityTImer : MonoBehaviour
 {
     private float timeDuration = 1f * 60f;
+    [SerializeField]
     private float timer;
     private float step;
 
@@ -22,6 +23,9 @@ public class IntensityTImer : MonoBehaviour
     [SerializeField]
     private bool countDown;
 
+    [SerializeField]
+    private GameObject testBtn;
+
     //[SerializeField]
     //private Text steps;
 
@@ -32,6 +36,7 @@ public class IntensityTImer : MonoBehaviour
     private float flashDuration = 1f;
     public int averageSteps;
     private int previousAmount = 0;
+
  
 
     // Update is called once per frame
@@ -52,12 +57,23 @@ public class IntensityTImer : MonoBehaviour
         {
             Flash();
         }
+
+        if (countDown && timer == 0)
+        {
+            showTestBtn();
+
+        }
     }
 
 
     public void startTimer()
     {
         ResetTimer();
+    }
+
+    public void showTestBtn()
+    {
+        testBtn.SetActive(true);
     }
 
     private void ResetTimer()

@@ -5,29 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class MenuUi : MonoBehaviour
 {
-    public void GoToTicketInstructions()
-    {
-        SceneManager.LoadScene("TicketInstructions");
-    }
 
     public void GoToTicketScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-
-    public void GoToEvoInstructions()
-    {
-        SceneManager.LoadScene("EvoInstructions");
+        SceneManager.LoadScene("TicketScene");
     }
 
     public void GoToEvolutionScene()
     {
         SceneManager.LoadScene("EvolutionScene");
-    }
-
-    public void GoToStatusInstructions()
-    {
-        SceneManager.LoadScene("StatusInstructions");
     }
 
     public void GoToStatusScene()
@@ -38,5 +24,22 @@ public class MenuUi : MonoBehaviour
     public void GoBackToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+
     }
+
+
+    public void GoBackToChoiceMenu()
+    {
+        SceneManager.LoadScene("ChoiceScene");
+
+    }
+
+    public void QuitGame()
+    {
+    #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+    #endif
+        Application.Quit();
+    }
+
 }

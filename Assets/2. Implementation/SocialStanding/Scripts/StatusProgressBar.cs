@@ -4,22 +4,26 @@ using UnityEngine;
 using UnityEngine.UI;
 using UIWidgets;
 using PedometerU.Tests;
+using System.Timers;
 
 public class StatusProgressBar : MonoBehaviour
 {
     [SerializeField] private Slider progressSlider;
-    public float fillSpeed = 0.5f;
+    private float fillSpeed = 0.5f;
     public Text statusText;
     public static int currentStatus;
-    public float timer = 0.01f;
+    [SerializeField]
+    private float timer = 0.01f;
     public float max;
     private bool fill = true;
     private bool paused = true;
-    private float initialMax;
+    private float initialMax = 10;
     // Step average variables
     private int steps = 0;
-    public float stepAverageGoal = 28 / 20;
-    public int timeframe = 20;
+
+    [SerializeField]
+    private float stepAverageGoal;
+    private int timeframe = 20;
     private bool increase = false;
     private bool decrease = false;
     private float stepAverage;
@@ -37,9 +41,42 @@ public class StatusProgressBar : MonoBehaviour
     public Text keepStatusText;
     public Text lossStatusText;
 
+    private Timer t = new Timer();
 
-    private void Start()
+    private int currentStep;
+
+    private int previousStep = 0;
+    private bool gameStart = false;
+
+
+    //private void Start()
+    //{
+    //    stepAverageGoal = 29; 
+    //    initialMax = max;
+    //    currentStatus = 0;
+    //    statusText.text = statusNames[currentStatus];
+    //    statusesUnlocked.ClearOptions();
+    //    statusesUnlocked.AddOptions(unlocked);
+    //    stepAverage = stepAverageGoal;
+    //    stepCounter = GetComponent<StepCounter>();
+    //    Timer();
+
+
+
+    //}
+
+
+
+
+    public void startGame()
     {
+        //set the personal step goal
+        //come from the Intensity Test
+        stepAverageGoal = testAverageStep.averageStep; //this should be uncommented when we exported the app. Link to the average eintensity test
+
+        //this can be accessed and changed from the inspector
+        //testing purpose
+        //stepAverageGoal = 19;
         initialMax = max;
         currentStatus = 0;
         statusText.text = statusNames[currentStatus];
@@ -47,53 +84,82 @@ public class StatusProgressBar : MonoBehaviour
         statusesUnlocked.AddOptions(unlocked);
         stepAverage = stepAverageGoal;
         stepCounter = GetComponent<StepCounter>();
+
+        //following codes are the timer for calculating the current step
+        //handle update function will call every 20 seconds
         Timer();
+        gameStart = true;
+        t.Elapsed += new ElapsedEventHandler(handleUpdate);
+        t.Interval = 20000;
+        t.Start();
+
     }
+
+
+    //calculate the average step
+    private void handleUpdate(object source, ElapsedEventArgs e)
+    {
+
+        //testing purpose
+        //step increment one by one sec
+        //currentStep = TImer.TimerCurrentStep;
+
+
+        currentStep = stepCounter.GetSteps(); //should be uncommented when we want to exported the app
+        stepAverage = currentStep - previousStep;
+        previousStep = currentStep;
+        Debug.Log(stepAverage);
+    }
+
 
     private void Update()
     {
-        steps = stepCounter.GetSteps();
-
-        // Testing purposes
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-            stepAverage = stepAverageGoal;
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-            stepAverage = 0;
-
-        if (timer < max && keepTiming)
+        if (gameStart)
         {
-            // We ignore the first timeframe and check if the time is a multiple of the timeframe e.g. 20
-            if ((int)timer % timeframe == 0)
+            // Testing purposes
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+                stepAverage = stepAverageGoal;
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                stepAverage = 0;
+
+            if (timer < max && keepTiming)
             {
-                stepAverage = steps / timeframe;
-                if (stepAverage >= stepAverageGoal)
+                // We ignore the first timeframe and check if the time is a multiple of the timeframe e.g. 20
+                if ((int)timer % timeframe == 0)
                 {
-                    fill = true;
-                    increase = true;
-                    decrease = false;
+                    if (stepAverage >= stepAverageGoal)
+                    {
+                        fill = true;
+                        increase = true;
+                        decrease = false;
+                    }
+                    else if (stepAverage < stepAverageGoal)
+                    {
+                        fill = false;
+                        decrease = true;
+                        increase = false;
+                    }
                 }
-                else if (stepAverage < stepAverageGoal)
-                {
-                    fill = false;
-                    decrease = true;
-                    increase = false;
-                }
+                if (increase)
+                    progressSlider.value = timer / max;
+                else if (decrease)
+                    progressSlider.value = timer / max;
+                Timer();
+                if (progressSlider.value == 0 && currentStatus != 0 && timer <= 0)
+                    ResetTimer();
             }
-            if (increase)
-                progressSlider.value = timer / max;
-            else if (decrease)
-                progressSlider.value = timer / max;
-            Timer();
-            if (progressSlider.value == 0 && currentStatus != 0 && timer <= 0)
+
+            else if (currentStatus == 3 && fill != false)
+            {
+                timer = max - 0.01f;
+                paused = true;
+            }
+            else if (timer >= max)
+            {
                 ResetTimer();
+            }
+
         }
-        else if (currentStatus == 3 && fill != false)
-        {
-            timer = max - 0.01f;
-            paused = true;
-        }
-        else if (timer >= max)
-            ResetTimer();
     }
 
     public void Timer()
@@ -161,6 +227,7 @@ public class StatusProgressBar : MonoBehaviour
 
     public void closePanel()
     {
+        Debug.Log("close panel"); 
         keepTiming = true;
         notifyPad.SetActive(false);
 

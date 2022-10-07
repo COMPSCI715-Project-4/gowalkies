@@ -5,7 +5,7 @@ using PedometerU.Tests;
 
 public class TImer : MonoBehaviour
 {
-    private float timeDuration = 3f * 60f;
+    private float timeDuration = 5f * 60f;
     private float timer;
 
     [SerializeField]
@@ -19,8 +19,8 @@ public class TImer : MonoBehaviour
     [SerializeField]
     private Text seperator;
 
-    [SerializeField]
-    private Text steps;
+    //[SerializeField]
+    //private Text steps;
 
     public static int TimerCurrentStep;
 
@@ -36,9 +36,9 @@ public class TImer : MonoBehaviour
     private int previousAmount = 0;
 
 
-    public static int currenStep;
-    public static int previousStep = 0;
-    public static bool reachedAverage;
+    //public static int currenStep;
+    //public static int previousStep = 0;
+    //public static bool reachedAverage;
 
 
 
@@ -102,19 +102,13 @@ public class TImer : MonoBehaviour
         firstSecond.text = currrentTime[2].ToString();
         secondSecond.text = currrentTime[3].ToString();
         TimerCurrentStep = (int)time;
-        steps.text = TimerCurrentStep.ToString();
+        //steps.text = TimerCurrentStep.ToString();
 
-        if ((int)timer % 20 == 0)
-        {
-            currenStep = (int)timer - previousStep;
-            previousStep = currenStep;
-
-            //Debug.Log("current step"); 
-            //Debug.Log(currenStep);
-            //Debug.Log("previous step");
-
-            //Debug.Log(previousStep); 
-        }
+        //if ((int)timer % 20 == 0)
+        //{
+        //    currenStep = (int)timer - previousStep;
+        //    previousStep = currenStep; 
+        //}
 
 
 
@@ -122,6 +116,8 @@ public class TImer : MonoBehaviour
 
     }
 
+
+    
     private void Flash()
     {
         if (countDown && timer != 0)

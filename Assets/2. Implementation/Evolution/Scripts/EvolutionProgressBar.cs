@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
 using UnityEngine;
 using UnityEngine.UI;
 using UIWidgets;
@@ -19,13 +20,11 @@ public class EvolutionProgressBar : MonoBehaviour
     private float initialMax = 10;
     // Step average variables
     private int steps = 0;
-    private int stepAverageGoal = 28;
+    public int stepAverageGoal;
     private int timeframe = 20;
     private bool increase = false;
     private bool decrease = false;
     private float stepAverage;
-    private StepCounter stepCounter;
-
     private bool keepTiming = true;
     public GameObject notifyPad;
     public Text nextStatusText;
@@ -35,90 +34,120 @@ public class EvolutionProgressBar : MonoBehaviour
     public Text evolutionLevelText;
     public Text keepStatusText;
     public Text lossStatusText;
+    private Timer t = new Timer();
     
     private GameObject pet;
 
     private int currentStep;
 
     private int previousStep = 0;
+    private bool gameStart = false;
 
-    private void Start()
+    [SerializeField]
+    private Text currentStepText;
+    [SerializeField]
+    private Text averageStepText;
+
+    public void startGame()
     {
+        //set the personal step goal
+        //come from the Intensity Test
+        //stepAverageGoal = testAverageStep.averageStep; //this should be uncommented when we exported the app. Link to the average eintensity test
+
+        //this can be accessed and changed from the inspector
+        //testing purpose
+        stepAverageGoal = testAverageStep.averageStep;
+        averageStepText.text = stepAverageGoal.ToString(); 
+
         initialMax = max;
         currentEvo = 1;
         pet = GameObject.FindWithTag("pets");
         stepAverage = stepAverageGoal;
-        stepCounter = GetComponent<StepCounter>();
+
+        //following codes are the timer for calculating the current step
+        //handle update function will call every 20 seconds
         Timer();
+        gameStart = true;
+        t.Elapsed += new ElapsedEventHandler(handleUpdate);
+        t.Interval = 20000;
+        t.Start();
+
+    }
+
+
+    //calculate the average step
+    private void handleUpdate(object source, ElapsedEventArgs e)
+    {
+
+        //testing purpose
+        //step increment one by one sec
+        //currentStep = TImer.TimerCurrentStep;
+
+
+        currentStep = StepCounter.currentSteps; //should be uncommented when we want to exported the app
+
+        stepAverage = currentStep - previousStep;
+        currentStepText.text = stepAverage.ToString();
+        previousStep = currentStep;
+        Debug.Log(stepAverage); 
     }
 
     private void Update()
     {
-        //steps = 
-        //currentStep = stepCounter.GetSteps();
 
-        currentStep = TImer.TimerCurrentStep;
-
-        // Testing purposes
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-            stepAverage = stepAverageGoal;
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-            stepAverage = 0;
-
-        if (timer < max && keepTiming)
+        if (gameStart)
         {
 
-            // We ignore the first timeframe and check if the time is a multiple of the timeframe e.g. 20
-            if ((int)timer % timeframe == 0)
+            // Testing purposes
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+                stepAverage = stepAverageGoal;
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                stepAverage = 0;
+
+            if (timer < max && keepTiming)
             {
-                Debug.Log((int)timer);
-                Debug.Log("step average"); 
-                Debug.Log(stepAverage);
 
-
-                //Debug.Log("current step");
-
-                //Debug.Log(currentStep);
-                //Debug.Log("previous step");
-                //Debug.Log(previousStep);
-                //stepAverage = currentStep - previousStep;
-                //previousStep = currentStep;
-                //Debug.Log("step average");
-                //Debug.Log(stepAverage);
-                if (stepAverage >= stepAverageGoal)
+                // We ignore the first timeframe and check if the time is a multiple of the timeframe e.g. 20
+                if ((int)timer % timeframe == 0)
                 {
-                    stepAverage = 18;
-                    fill = true;
-                    increase = true;
-                    decrease = false;
+
+                    if (stepAverage >= stepAverageGoal)
+                    {
+                        fill = true;
+                        increase = true;
+                        decrease = false;
+                    }
+                    else if (stepAverage < stepAverageGoal)
+                    {
+                        fill = false;
+                        decrease = true;
+                        increase = false;
+                    }
                 }
-                else if (stepAverage < stepAverageGoal)
-                {
-                    stepAverage = 30;
-                    fill = false;
-                    decrease = true;
-                    increase = false;
-                }
+                if (increase)
+                    progressSlider.value = timer / max;
+                else if (decrease)
+                    progressSlider.value = timer / max;
+                Timer();
+                if (progressSlider.value == 0 && currentEvo != 1 && timer <= 0)
+                    ResetTimer();
             }
-            if (increase)
-                progressSlider.value = timer / max;
-            else if (decrease)
-                progressSlider.value = timer / max;
-            Timer();
-            if (progressSlider.value == 0 && currentEvo != 1 && timer <= 0)
+            else if (currentEvo == 4 && fill != false)
+            {
+                timer = max - 0.01f;
+                paused = true;
+            }
+            else if (timer >= max)
+            {
+                //Debug.Log("Here1");
                 ResetTimer();
+                ChangeSize();
+            }
+
+
         }
-        else if (currentEvo == 4 && fill != false)
-        {
-            timer = max - 0.01f;
-            paused = true;
-        }
-        else if (timer >= max)
-        {
-            //Debug.Log("Here1");
-            ResetTimer();
-            ChangeSize();
-        }
+
+
     }
 
     public void ChangeSize()

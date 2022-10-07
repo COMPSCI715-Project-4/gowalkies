@@ -21,7 +21,7 @@ public class testAverageStep : MonoBehaviour
     private float timer;
 
 
-    private int averageStep;
+    public static int averageStep;
 
 
     public void startStep()
@@ -40,7 +40,7 @@ public class testAverageStep : MonoBehaviour
         // Display the values // Distance in feet
         
         stepsText.text = steps.ToString();
-        distanceText.text = distance.ToString();
+        distanceText.text = distance.ToString("F1") + "m";
 
 
     }
