@@ -10,6 +10,7 @@ public class TogglePanel : MonoBehaviour
 
     public void TogglePanelFunc()
     {
-        panel.SetActive(!panel);
+        //Debug.Log(panel.activeSelf); 
+        panel.SetActive(!panel.activeSelf);
     } 
 }

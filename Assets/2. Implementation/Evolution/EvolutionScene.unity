@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2658,7 +2658,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &690022389
 GameObject:
@@ -8497,7 +8497,7 @@ MonoBehaviour:
   progressSlider: {fileID: 259506702}
   fillSpeed: 0.5
   timer: 0.01
-  max: 60
+  max: 30
   stepAverageGoal: 0
   notifyPad: {fileID: 2146613841}
   nextStatusText: {fileID: 722786911}
@@ -8509,6 +8509,11 @@ MonoBehaviour:
   lossStatusText: {fileID: 1316342827}
   currentStepText: {fileID: 816096310}
   averageStepText: {fileID: 182185908}
+  pets:
+  - {fileID: 2188463385559705169, guid: 7685efb80838e4bff8b70487bd01273c, type: 3}
+  - {fileID: 8627941187036594812, guid: 40029ab7eadbc4526899b910dd6bab08, type: 3}
+  - {fileID: 5240747404139382527, guid: 2f3d333104f3b49b4a1dffb923dc22ca, type: 3}
+  - {fileID: 9017239283963746545, guid: e18b6047aacbf4e30a4237f51d73c4eb, type: 3}
 --- !u!1 &1780233033
 GameObject:
   m_ObjectHideFlags: 0
@@ -10742,7 +10747,7 @@ PrefabInstance:
     - target: {fileID: 3811591508773167263, guid: 90290c13d4a3d46eea32be3d6a1a14c4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3811591508773167263, guid: 90290c13d4a3d46eea32be3d6a1a14c4,
         type: 3}

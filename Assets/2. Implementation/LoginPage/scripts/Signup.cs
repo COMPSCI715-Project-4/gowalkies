@@ -55,6 +55,8 @@ public class Signup: MonoBehaviour
             UserInfo info = resp.data;
             Debug.Log(info.ToJson());
             UserDetails.info = info;
+            Database db = new Database();
+            db.Store(info);
             SignUpPanel.SetActive(false); 
             StartIntensityPanel.SetActive(true);
         }

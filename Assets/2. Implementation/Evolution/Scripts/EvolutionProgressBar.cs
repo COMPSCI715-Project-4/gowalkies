@@ -17,11 +17,12 @@ public class EvolutionProgressBar : MonoBehaviour
     public float max;
     private bool fill = true;
     private bool paused = true;
-    private float initialMax = 10;
+    private float initialMax;
+    private float[] increaseRatio;
     // Step average variables
     private int steps = 0;
     public int stepAverageGoal;
-    private int timeframe = 20;
+    private int timeframe = 10;
     private bool increase = false;
     private bool decrease = false;
     private float stepAverage;
@@ -42,11 +43,16 @@ public class EvolutionProgressBar : MonoBehaviour
 
     private int previousStep = 0;
     private bool gameStart = false;
+    
 
     [SerializeField]
     private Text currentStepText;
     [SerializeField]
     private Text averageStepText;
+
+    [SerializeField]
+    private GameObject[] pets;
+
 
     public void startGame()
     {
@@ -56,12 +62,14 @@ public class EvolutionProgressBar : MonoBehaviour
 
         //this can be accessed and changed from the inspector
         //testing purpose
+
+        increaseRatio = new float[]{ 10f, 20f, 30f}; 
         stepAverageGoal = testAverageStep.averageStep;
         averageStepText.text = stepAverageGoal.ToString(); 
 
         initialMax = max;
         currentEvo = 1;
-        pet = GameObject.FindWithTag("pets");
+        pet = Instantiate(pets[0]); 
         stepAverage = stepAverageGoal;
 
         //following codes are the timer for calculating the current step
@@ -156,13 +164,27 @@ public class EvolutionProgressBar : MonoBehaviour
         {
             Vector3 size = new Vector3(0.2f, 0.2f, 0.2f);
             if (fill == true)
-                pet.transform.localScale = (currentEvo + 1) * size;
+            {
+                //pet.transform.localScale = (currentEvo + 1) * size;
+                Vector3 position = pet.transform.position;
+                Destroy(pet);
+
+                pet = Instantiate(pets[currentEvo], position, Quaternion.identity);
+                Debug.Log(pet.name); 
+              
+            }
+
             else if (fill == false)
-                pet.transform.localScale = 1 * size;
+            {
+                pet = pets[0];
+
+            }
             Timer();
         }
         else
-            pet = GameObject.FindWithTag("pets");
+        {
+     
+        }
     }
 
     public void Timer()
@@ -235,9 +257,13 @@ public class EvolutionProgressBar : MonoBehaviour
 
         if (fill == true)
         {
-            max *= 2;
             if (currentEvo < 4)
+            {
+                max += increaseRatio[currentEvo - 1];
                 currentEvo++;
+
+            }
+
         }
         else if (fill == false)
         {

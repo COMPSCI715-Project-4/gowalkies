@@ -596,8 +596,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 72789775}
   m_TextComponent: {fileID: 1948293709}
   m_Placeholder: {fileID: 1500919623}
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
@@ -5175,8 +5175,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 487566057}
   m_TextComponent: {fileID: 455380856}
   m_Placeholder: {fileID: 218134300}
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
@@ -13077,7 +13077,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -21.817047, y: -62.848328}
+  m_AnchoredPosition: {x: -21.817078, y: -62.848328}
   m_SizeDelta: {x: -239.6341, y: 214.7316}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1091803569
@@ -15756,8 +15756,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1264126819}
   m_TextComponent: {fileID: 1975296834}
   m_Placeholder: {fileID: 1122706187}
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
@@ -17855,7 +17855,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -21.817047, y: 106.87695}
+  m_AnchoredPosition: {x: -21.817078, y: 106.87695}
   m_SizeDelta: {x: -239.6341, y: 214.7316}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &1412616159

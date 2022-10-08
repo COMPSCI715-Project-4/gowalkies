@@ -8,12 +8,13 @@ public class FetchRank : MonoBehaviour
     void Fetch()
     {
         StartCoroutine(FetchHandler());
+
     }
 
     // Update is called once per frame
     IEnumerator FetchHandler()
     {
-        UnityWebRequest www = UnityWebRequest.Get("http://localhost:8080/rank");
+        UnityWebRequest www = UnityWebRequest.Get("http://82.157.148.219/rank");
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)

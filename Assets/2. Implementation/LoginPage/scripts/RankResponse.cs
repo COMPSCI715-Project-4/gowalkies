@@ -4,7 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public class RankResponse
 {
-    public IEnumerable<Rank> data;
+    public List<Rank> data;
+    public string err;
 
     public static RankResponse CreateFromJSON(string jsonString)
     {

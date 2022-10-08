@@ -60,7 +60,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
                 else
                 {
-                    spawnedObject.transform.position = hitPose.position;
+                    //spawnedObject.transform.position = hitPose.position;
                 }
             }
         }

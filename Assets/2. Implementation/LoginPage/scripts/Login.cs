@@ -57,6 +57,8 @@ public class Login : MonoBehaviour
             UserInfo info = resp.data;
             Debug.Log(info.ToJson());
             UserDetails.info = info;
+            Database db = new Database();
+            db.Store(info);
             loginPanel.SetActive(false);
             IntensityPanel.SetActive(true);
 
