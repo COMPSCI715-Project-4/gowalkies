@@ -28,6 +28,7 @@ public class EvolutionProgressBar : MonoBehaviour
     private float stepAverage;
     private bool keepTiming = true;
     public GameObject notifyPad;
+    public GameObject finishPanel;
     public Text nextStatusText;
     public Text newStatusText;
     public Text oldStatusText;
@@ -140,16 +141,16 @@ public class EvolutionProgressBar : MonoBehaviour
                 if (progressSlider.value == 0 && currentEvo != 1 && timer <= 0)
                     ResetTimer();
             }
-            else if (currentEvo == 4 && fill != false)
-            {
-                timer = max - 0.01f;
-                paused = true;
-            }
             else if (timer >= max)
             {
                 //Debug.Log("Here1");
                 ResetTimer();
                 ChangeSize();
+            }
+            else if (currentEvo == 4 && fill != false)
+            {
+                timer = max - 0.01f;
+                paused = true;
             }
 
 
@@ -222,18 +223,26 @@ public class EvolutionProgressBar : MonoBehaviour
 
         if (fill == true)
         {
+            finishPanel.SetActive(false);
             progressSlider.value = 0f;
             increaseImage.SetActive(true);
             decreaseImage.SetActive(false);
             newStatusText.text = "Level " + (currentEvo + 1);
             oldStatusText.text = "Level " + currentEvo;
             congratsText.text = "Congratulations! Your pet has evolved to level " + (currentEvo + 1) + "!";
+            if (currentEvo == 4)
+            {
+                notifyPad.SetActive(false);
+                finishPanel.SetActive(true);
+            }
+            
             if (currentEvo >= 2)
             {
                 nextStatusText.text = "Congrats you've reached max level!";
             }
             else
                 nextStatusText.text = "Next Evolution Level: " + (currentEvo + 2);
+            
         }
         else if (fill == false)
         {

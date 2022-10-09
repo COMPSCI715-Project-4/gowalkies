@@ -19,6 +19,7 @@ public class StatusProgressBar : MonoBehaviour
     private bool fill = true;
     private bool paused = true;
     private float initialMax = 10;
+    private float[] increaseRatio;
     // Step average variables
     private int steps = 0;
 
@@ -34,6 +35,7 @@ public class StatusProgressBar : MonoBehaviour
     private List<string> unlocked = new List<string> { "Pet Newbie" };
     private bool keepTiming = true;
     public GameObject notifyPad;
+    public GameObject finishPanel;
     public Text nextStatusText;
     public Text newStatusText;
     public Text oldStatusText;
@@ -78,6 +80,7 @@ public class StatusProgressBar : MonoBehaviour
         //testing purpose
         //stepAverageGoal = 19;
         initialMax = max;
+        increaseRatio = new float[] { 10f, 20f, 30f };
         currentStatus = 0;
         statusText.text = statusNames[currentStatus];
         statusesUnlocked.ClearOptions();
@@ -149,15 +152,11 @@ public class StatusProgressBar : MonoBehaviour
                     ResetTimer();
             }
 
-            else if (currentStatus == 3 && fill != false)
-            {
-                timer = max - 0.01f;
-                paused = true;
-            }
             else if (timer >= max)
             {
                 ResetTimer();
             }
+            
 
         }
     }
@@ -194,14 +193,21 @@ public class StatusProgressBar : MonoBehaviour
         GameObject increaseImage = statusPanel.transform.GetChild(0).gameObject;
         GameObject decreaseImage = statusPanel.transform.GetChild(1).gameObject;
 
-        if (fill == true && currentStatus < 3)
+        if (fill == true)
         {
+            finishPanel.SetActive(false);
             progressSlider.value = 0f;
             increaseImage.SetActive(true);
             decreaseImage.SetActive(false);
+            if (currentStatus == 3)
+            {
+                notifyPad.SetActive(false);
+                finishPanel.SetActive(true);
+            }
             newStatusText.text = statusNames[currentStatus + 1];
             oldStatusText.text = statusNames[currentStatus];
             congratsText.text = "Congratulations! You have increased your status to " + statusNames[currentStatus + 1] + "!";
+
             if (currentStatus >= 2)
             {
                 nextStatusText.text = "Congrats you've reached the highest social standing!";
@@ -233,7 +239,7 @@ public class StatusProgressBar : MonoBehaviour
 
         if (fill == true)
         {
-            max *= 2;
+            max += increaseRatio[currentStatus];
             if (currentStatus < 4)
                 currentStatus++;
             statusText.text = statusNames[currentStatus];
