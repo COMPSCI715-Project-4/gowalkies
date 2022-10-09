@@ -1140,18 +1140,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1777316764}
-        m_TargetAssemblyTypeName: TicketProgressBar, Assembly-CSharp
-        m_MethodName: ResetTimer
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 1777316765}
         m_TargetAssemblyTypeName: PedometerU.Tests.StepCounter, Assembly-CSharp
         m_MethodName: startStep
@@ -5324,7 +5312,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &700443074
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7472,7 +7460,6 @@ RectTransform:
   - {fileID: 506642492}
   - {fileID: 2146613844}
   - {fileID: 1273865131}
-  - {fileID: 986639798}
   - {fileID: 1346285514}
   m_Father: {fileID: 0}
   m_RootOrder: 7
@@ -7513,7 +7500,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 295201229}
-  m_Father: {fileID: 948874508}
+  m_Father: {fileID: 1346285514}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -9817,14 +9804,15 @@ RectTransform:
   m_Children:
   - {fileID: 628340041}
   - {fileID: 259506700}
-  - {fileID: 1760507400}
   - {fileID: 1165693363}
-  - {fileID: 1248538366}
   - {fileID: 865691601}
   - {fileID: 1114547860}
   - {fileID: 1431888725}
   - {fileID: 1984260899}
   - {fileID: 1216662736}
+  - {fileID: 1248538366}
+  - {fileID: 1760507400}
+  - {fileID: 986639798}
   - {fileID: 261526487}
   - {fileID: 1237470772}
   m_Father: {fileID: 948874508}
@@ -13378,7 +13366,7 @@ MonoBehaviour:
   progressSlider: {fileID: 259506702}
   fillSpeed: 0.5
   timer: 0.01
-  max: 60
+  max: 30
   notifyPad: {fileID: 1760507399}
   panel: {fileID: 187331831}
   nextStatusText: {fileID: 722786911}
@@ -13389,6 +13377,7 @@ MonoBehaviour:
   keepStatusText: {fileID: 1882744237}
   lossStatusText: {fileID: 1316342827}
   stepAverageGoal: 20
+  stepAverage: 10
 --- !u!114 &1777316765
 MonoBehaviour:
   m_ObjectHideFlags: 0

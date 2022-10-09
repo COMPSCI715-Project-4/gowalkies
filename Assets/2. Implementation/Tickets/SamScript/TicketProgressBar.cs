@@ -15,7 +15,7 @@ public class TicketProgressBar : MonoBehaviour
     [SerializeField]
     private float timer = 0.01f;
     [SerializeField]
-    public float max;
+    private float max;
 
     private bool fill = true;
     private bool paused = false;
@@ -26,6 +26,7 @@ public class TicketProgressBar : MonoBehaviour
     private bool keepTiming = true;
     public GameObject notifyPad;
     public GameObject panel;
+    private float[] increaseRatio;
     public Text nextStatusText;
     public Text newStatusText;
     public Text oldStatusText;
@@ -42,9 +43,10 @@ public class TicketProgressBar : MonoBehaviour
     [SerializeField]
     public float stepAverageGoal;
 
-    private int timeframe = 20;
+    private int timeframe = 10;
     private bool increase = false;
     private bool decrease = false;
+    [SerializeField]
     private float stepAverage;
 
     // Step Counter variables
@@ -62,11 +64,12 @@ public class TicketProgressBar : MonoBehaviour
         // currentEvo = 1;
         // pet = GameObject.FindWithTag("pets");
         fill = false;
-        panel.GetComponent<Button>().onClick.AddListener(GameStart);
+        //panel.GetComponent<Button>().onClick.AddListener(GameStart);
     }
 
     public void GameStart()
-    {   
+    {
+        increaseRatio = new float[] { 10f, 20f, 30f };
         fill = true;
         // Timer();
         // stepAverage = stepAverageGoal;
@@ -91,7 +94,7 @@ public class TicketProgressBar : MonoBehaviour
         Timer();
         gameStart = true;
         t.Elapsed += new ElapsedEventHandler(handleUpdate);
-        t.Interval = 20000;
+        t.Interval = 10000;
         t.Start();
     } 
 
@@ -106,9 +109,15 @@ public class TicketProgressBar : MonoBehaviour
 
 
         currentStep = stepCounter.GetSteps(); //should be uncommented when we want to exported the app
-        stepAverage = currentStep - previousStep;
+        //Debug.Log(stepAverage);
+        Debug.Log(extra_step.ToString()); 
+
+        stepAverage = currentStep - previousStep + extra_step;
+        
         previousStep = currentStep;
-        Debug.Log(stepAverage); 
+
+        extra_step = 0; 
+        //Debug.Log(stepAverage); 
     }
 
     private void Update()
@@ -130,7 +139,7 @@ public class TicketProgressBar : MonoBehaviour
                 // We ignore the first timeframe and check if the time is a multiple of the timeframe e.g. 20
                 if ((int)timer % timeframe == 0)
                 {
-                    stepAverage += extra_step;
+
                     if (stepAverage >= stepAverageGoal)
                     {
                         fill = true;
@@ -163,7 +172,7 @@ public class TicketProgressBar : MonoBehaviour
                     ResetTimer();
                 }
                 // Reset 
-                extra_step = 0;
+                //extra_step = 0;
             }
 
             else if (timer >= max)
@@ -325,7 +334,11 @@ public class TicketProgressBar : MonoBehaviour
 
         if (fill == true)
         {
-            max *= 2;
+
+            if (currentEvo < 4)
+            {
+                max += increaseRatio[currentEvo - 1];
+            }
             if (currentEvo <= 4)
                 currentEvo++;
                 once = false;

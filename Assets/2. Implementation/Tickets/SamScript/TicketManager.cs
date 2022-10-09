@@ -67,6 +67,7 @@ public class TicketManager : MonoBehaviour
         
             // Reduce the steps
             TicketProgressBar.extra_step += extra_steps[remove-1];
+            Debug.Log(TicketProgressBar.extra_step.ToString()); 
         }
 
         confirm = false;

@@ -77,7 +77,7 @@ public class EvolutionProgressBar : MonoBehaviour
         Timer();
         gameStart = true;
         t.Elapsed += new ElapsedEventHandler(handleUpdate);
-        t.Interval = 20000;
+        t.Interval = 10000;
         t.Start();
 
     }
@@ -271,5 +271,10 @@ public class EvolutionProgressBar : MonoBehaviour
             currentEvo = 1;
         }
         evolutionLevelText.text = "Level " + currentEvo;
+    }
+
+    private void OnDestroy()
+    {
+        
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UIWidgets;
 using PedometerU.Tests;
 using System.Timers;
+using UnityEngine.Networking;
 
 public class StatusProgressBar : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class StatusProgressBar : MonoBehaviour
     private float stepAverage;
     private StepCounter stepCounter;
 
-    List<string> statusNames = new List<string> { "Pet Newbie", "Pet Lover", "Pet Master", "Pet Legend" };
+    public static List<string> statusNames = new List<string> { "Pet Newbie", "Pet Lover", "Pet Master", "Pet Legend" };
     private List<string> unlocked = new List<string> { "Pet Newbie" };
     private bool keepTiming = true;
     public GameObject notifyPad;
@@ -64,7 +65,6 @@ public class StatusProgressBar : MonoBehaviour
 
 
     //}
-
 
 
 
@@ -260,4 +260,39 @@ public class StatusProgressBar : MonoBehaviour
         fill = true;
         stepAverage = stepAverageGoal;
     }
+
+    // Update is called once per frame
+    IEnumerator UpdateRankHandler(string token, int level, int steps)
+    {
+
+        WWWForm form = new WWWForm();
+        form.AddField("token", token);
+        form.AddField("level", level.ToString());
+        form.AddField("steps", steps.ToString());
+
+        UnityWebRequest www = UnityWebRequest.Post("http://82.157.148.219/rank/update", form);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            UserResponse resp = UserResponse.CreateFromJSON(www.downloadHandler.text);
+            UserInfo info = resp.data;
+            Debug.Log(info.ToJson());
+            UserDetails.info = info;
+            Database db = new Database();
+            db.Store(info);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        Database database = new Database();
+        string token = database.Token();
+        StartCoroutine(UpdateRankHandler(token, currentStatus, currentStep));
+    }
+
 }
