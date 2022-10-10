@@ -59,7 +59,7 @@ public class testAverageStep : MonoBehaviour
     {
         if (stepsText.text != null)
         {
-            averageStep = Mathf.FloorToInt(int.Parse(stepsText.text) / 3);
+            averageStep = Mathf.FloorToInt(int.Parse(stepsText.text) / 6);
             Debug.Log(averageStep);
             averageStepText.text = averageStep.ToString();
             averageStepNotify.SetActive(true);

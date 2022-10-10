@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: f182022907ecd41d1988effb3563dae0, type: 2}
+    - target: {fileID: 9500000, guid: 0faaca137bc5a794098e6b71f8bb22f6, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 0faaca137bc5a794098e6b71f8bb22f6, type: 3}
@@ -83,7 +87,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &-8087909283281848888
 BoxCollider:
@@ -111,5 +115,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigyBody: {fileID: 6660691622645629559}
-  animator: {fileID: 0}
+  animator: {fileID: 9017239283971009365}
   _moveSpeed: 1
+--- !u!95 &9017239283971009365 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 0faaca137bc5a794098e6b71f8bb22f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 9017239283963715125}
+  m_PrefabAsset: {fileID: 0}

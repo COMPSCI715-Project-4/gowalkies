@@ -15,7 +15,7 @@ public class StatusProgressBar : MonoBehaviour
     public static int currentStatus;
     [SerializeField]
     private float timer = 0.01f;
-    public float max;
+    public float max = 30;
     private bool fill = true;
     private bool paused = true;
     private float initialMax = 10;
@@ -51,6 +51,9 @@ public class StatusProgressBar : MonoBehaviour
 
     private int previousStep = 0;
     private bool gameStart = false;
+
+    [SerializeField]
+    public GameObject pet;
 
 
     //private void Start()
@@ -95,7 +98,7 @@ public class StatusProgressBar : MonoBehaviour
         statusesUnlocked.AddOptions(unlocked);
         stepAverage = stepAverageGoal;
         stepCounter = GetComponent<StepCounter>();
-
+        Instantiate(pet); 
         //following codes are the timer for calculating the current step
         //handle update function will call every 20 seconds
         Timer();
@@ -222,7 +225,8 @@ public class StatusProgressBar : MonoBehaviour
             }
             else
                 nextStatusText.text = "Next Status: " + statusNames[currentStatus + 2];
-            
+            StartCoroutine(UpdateRankHandler(token, currentStatus, currentStep, StepCounter.currentDistance));
+
         }
         else if (fill == false)
         {
@@ -236,6 +240,7 @@ public class StatusProgressBar : MonoBehaviour
                 congratsText.text = "Oh no! You lost all your social standing!";
             }
             nextStatusText.text = "Next Status: " + statusNames[1];
+            StartCoroutine(UpdateRankHandler(token, currentStatus, currentStep, StepCounter.currentDistance));
         }
     }
 
@@ -303,6 +308,7 @@ public class StatusProgressBar : MonoBehaviour
         }
         else
         {
+            Debug.Log("here");
             UserResponse resp = UserResponse.CreateFromJSON(www.downloadHandler.text);
             UserInfo info = resp.data;
             Debug.Log(info.ToJson());

@@ -115,6 +115,4 @@ public class TicketManager : MonoBehaviour
         ticket_3.SetActive(false);
         ticket_4.SetActive(false);
     }
-
-
 }

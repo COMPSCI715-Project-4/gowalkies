@@ -13493,6 +13493,7 @@ MonoBehaviour:
   lossStatusText: {fileID: 1316342827}
   stepAverageGoal: 20
   stepAverage: 10
+  pet: {fileID: 5240747404139382527, guid: 2f3d333104f3b49b4a1dffb923dc22ca, type: 3}
 --- !u!114 &1777316765
 MonoBehaviour:
   m_ObjectHideFlags: 0

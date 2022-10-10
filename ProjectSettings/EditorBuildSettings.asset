@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/2. Implementation/SocialStanding/SocialStandingScene.unity
     guid: d745ebc1f02ee7948886b1e342bb2d34
-  - enabled: 1
+  - enabled: 0
     path: Assets/ARFondation/Scenes/SimpleAR/SimpleAR.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:

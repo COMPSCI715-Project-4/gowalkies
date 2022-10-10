@@ -9,7 +9,7 @@ public class Database
 
     public Database()
     {
-        path = Application.dataPath + "userinfo.json";
+        path = Path.Combine(Application.persistentDataPath, "userinfo.json");
     }
 
     public void Store(UserInfo info)

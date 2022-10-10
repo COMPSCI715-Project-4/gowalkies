@@ -16,7 +16,7 @@ public class TicketProgressBar : MonoBehaviour
     [SerializeField]
     private float timer = 0.01f;
     [SerializeField]
-    private float max;
+    private float max = 30;
 
     private bool fill = true;
     private bool paused = false;
@@ -53,8 +53,9 @@ public class TicketProgressBar : MonoBehaviour
     // Step Counter variables
     private StepCounter stepCounter;
     private int previousStep = 0;
-    private bool gameStart = false; 
+    private bool gameStart = false;
 
+    [SerializeField]
     private GameObject pet;
     private int currentStep;
     private string token;
@@ -90,7 +91,7 @@ public class TicketProgressBar : MonoBehaviour
 
         initialMax = max;
         currentEvo = 1;
-        pet = GameObject.FindWithTag("pets");
+        Instantiate(pet); 
         stepAverage = stepAverageGoal;
         stepCounter = GetComponent<StepCounter>();
 

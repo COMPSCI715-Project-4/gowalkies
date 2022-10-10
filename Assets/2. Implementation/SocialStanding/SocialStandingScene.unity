@@ -6646,6 +6646,11 @@ PrefabInstance:
       objectReference: {fileID: 24967805}
     - target: {fileID: 695456426910825035, guid: 4ee22c1f54b174122b6a766fe09e0de8,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1777316763}
+    - target: {fileID: 695456426910825035, guid: 4ee22c1f54b174122b6a766fe09e0de8,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
@@ -6656,8 +6661,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 695456426910825035, guid: 4ee22c1f54b174122b6a766fe09e0de8,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SaveStatus
+      objectReference: {fileID: 0}
+    - target: {fileID: 695456426910825035, guid: 4ee22c1f54b174122b6a766fe09e0de8,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: MenuUi, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 695456426910825035, guid: 4ee22c1f54b174122b6a766fe09e0de8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: StatusProgressBar, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 695456426910825035, guid: 4ee22c1f54b174122b6a766fe09e0de8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1104539865941108374, guid: 4ee22c1f54b174122b6a766fe09e0de8,
         type: 3}
@@ -12950,6 +12970,7 @@ MonoBehaviour:
   statusesUnlocked: {fileID: 1014814814}
   keepStatusText: {fileID: 1882744237}
   lossStatusText: {fileID: 1316342827}
+  pet: {fileID: 5240747404139382527, guid: 2f3d333104f3b49b4a1dffb923dc22ca, type: 3}
 --- !u!114 &1777316764
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ public class EvolutionProgressBar : MonoBehaviour
     [SerializeField]
     private float timer = 0.01f;
 
-    public float max;
+    public float max = 30;
     private bool fill = true;
     private bool paused = true;
     private float initialMax;
