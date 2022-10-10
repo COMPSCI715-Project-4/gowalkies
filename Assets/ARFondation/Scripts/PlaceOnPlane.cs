@@ -18,6 +18,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [Tooltip("Instantiates this prefab on a plane at the touch location.")]
         GameObject m_PlacedPrefab;
 
+        [SerializeField]
+        private Camera mainCamera;
+
+        [SerializeField]
+        public Vector3 position; 
+
         /// <summary>
         /// The prefab to instantiate on touch.
         /// </summary>
@@ -56,7 +62,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 if (spawnedObject == null)
                 {
-                    spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
+                    ////Vector3 offset = new Vector3(10, 0, 0);
+                    //Vector3 newPosition = mainCamera.transform.position + position;
+                    //spawnedObject = Instantiate(m_PlacedPrefab, newPosition, Quaternion.identity);
                 }
                 else
                 {

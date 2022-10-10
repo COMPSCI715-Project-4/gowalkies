@@ -67,7 +67,7 @@ public class TicketManager : MonoBehaviour
         
             // Reduce the steps
             TicketProgressBar.extra_step += extra_steps[remove-1];
-            Debug.Log(TicketProgressBar.extra_step.ToString()); 
+            //Debug.Log(TicketProgressBar.extra_step.ToString()); 
         }
 
         confirm = false;
@@ -106,6 +106,14 @@ public class TicketManager : MonoBehaviour
     void Cancelled()
     {
         confirm = false;
+    }
+
+    private void OnDestroy()
+    {
+        ticket_1.SetActive(false);
+        ticket_2.SetActive(false);
+        ticket_3.SetActive(false);
+        ticket_4.SetActive(false);
     }
 
 

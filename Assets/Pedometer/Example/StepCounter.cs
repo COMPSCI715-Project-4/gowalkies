@@ -12,7 +12,8 @@ namespace PedometerU.Tests {
 
         public Text stepText, distanceText;
         private Pedometer pedometer;
-        public static int currentSteps;
+        public static int currentSteps = 0;
+        public static float currentDistance = 0; 
 
 
         public void startStep()
@@ -28,6 +29,7 @@ namespace PedometerU.Tests {
             stepText.text = steps.ToString();
             distanceText.text = distance.ToString("F1") + "m";
             currentSteps = steps;
+            currentDistance = float.Parse(distance.ToString("F1")); 
         }
 
         private void OnDisable () {
@@ -40,5 +42,6 @@ namespace PedometerU.Tests {
         { 
             return currentSteps;
         }
+
     }
 }

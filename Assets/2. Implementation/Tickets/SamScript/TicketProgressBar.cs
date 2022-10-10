@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Timers;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 using UIWidgets;
 using PedometerU.Tests;
 
@@ -55,7 +56,8 @@ public class TicketProgressBar : MonoBehaviour
     private bool gameStart = false; 
 
     private GameObject pet;
-    private int currentStep; 
+    private int currentStep;
+    private string token;
 
 
     private void Start()
@@ -64,7 +66,10 @@ public class TicketProgressBar : MonoBehaviour
         // currentEvo = 1;
         // pet = GameObject.FindWithTag("pets");
         fill = false;
-        //panel.GetComponent<Button>().onClick.AddListener(GameStart);
+        
+        Database database = new Database();
+        token = database.Token();
+
     }
 
     public void GameStart()
@@ -342,14 +347,55 @@ public class TicketProgressBar : MonoBehaviour
             if (currentEvo <= 4)
                 currentEvo++;
                 once = false;
+            SaveStatus();
         }
         else if (fill == false)
         {
             max = initialMax;
             currentEvo = 1;
+            SaveStatus();
         }
         evolutionLevelText.text = "Level " + currentEvo;
         fill = true;
         stepAverage = stepAverageGoal;
     }
+
+    public void SaveStatus()
+    {
+        StartCoroutine(UpdateRankHandler(token, currentEvo, currentStep, StepCounter.currentDistance));
+    }
+
+    IEnumerator UpdateRankHandler(string token, int level, int steps, float distance)
+    {
+
+        WWWForm form = new WWWForm();
+        form.AddField("token", token);
+        form.AddField("kind", "ticket");
+        form.AddField("level", (level - 1).ToString());
+        form.AddField("steps", steps.ToString());
+        form.AddField("distance", distance.ToString());
+        form.AddField("duration", TImer.TimerCurrentTime.ToString());
+
+        UnityWebRequest www = UnityWebRequest.Post("http://82.157.148.219/rank/update", form);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            UserResponse resp = UserResponse.CreateFromJSON(www.downloadHandler.text);
+            UserInfo info = resp.data;
+            Debug.Log(info.ToJson());
+            UserDetails.info = info;
+            Database db = new Database();
+            db.Store(info);
+        }
+    }
+
+    //private void OnDestroy()
+    //{
+    //    StartCoroutine(UpdateRankHandler(token, currentEvo, currentStep, StepCounter.currentDistance));
+    //}
 }

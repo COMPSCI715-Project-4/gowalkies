@@ -43,6 +43,7 @@ public class StatusProgressBar : MonoBehaviour
     public Dropdown statusesUnlocked;
     public Text keepStatusText;
     public Text lossStatusText;
+    private string token;
 
     private Timer t = new Timer();
 
@@ -67,6 +68,13 @@ public class StatusProgressBar : MonoBehaviour
 
 
     //}
+
+    private void Start()
+    {
+        Database database = new Database();
+        token = database.Token();
+        StartCoroutine(UpdateRankHandler(token, 0, 0, 0));
+    }
 
 
 
@@ -249,6 +257,7 @@ public class StatusProgressBar : MonoBehaviour
             statusesUnlocked.ClearOptions();
             statusesUnlocked.AddOptions(unlocked);
             statusesUnlocked.captionText.text = statusNames[currentStatus];
+            StartCoroutine(UpdateRankHandler(token, currentStatus, currentStep, StepCounter.currentDistance));
         }
         else if (fill == false)
         {
@@ -262,19 +271,28 @@ public class StatusProgressBar : MonoBehaviour
             if (currentStatus > 0)
                 currentStatus = 0;
             statusText.text = statusNames[currentStatus];
+            StartCoroutine(UpdateRankHandler(token, currentStatus, currentStep, StepCounter.currentDistance));
         }
         fill = true;
         stepAverage = stepAverageGoal;
     }
 
-    // Update is called once per frame
-    IEnumerator UpdateRankHandler(string token, int level, int steps)
+    public void SaveStatus()
+    {
+        StartCoroutine(UpdateRankHandler(token, currentStatus, currentStep, StepCounter.currentDistance));
+    }
+
+    IEnumerator UpdateRankHandler(string token, int level, int steps, float distance)
     {
 
         WWWForm form = new WWWForm();
         form.AddField("token", token);
+        form.AddField("kind", "rank");
         form.AddField("level", level.ToString());
         form.AddField("steps", steps.ToString());
+        form.AddField("distance", distance.ToString());
+        form.AddField("duration", TImer.TimerCurrentTime.ToString());
+
 
         UnityWebRequest www = UnityWebRequest.Post("http://82.157.148.219/rank/update", form);
         yield return www.SendWebRequest();
@@ -296,9 +314,8 @@ public class StatusProgressBar : MonoBehaviour
 
     private void OnDestroy()
     {
-        Database database = new Database();
-        string token = database.Token();
-        StartCoroutine(UpdateRankHandler(token, currentStatus, currentStep));
+        
+        StartCoroutine(UpdateRankHandler(token, currentStatus, currentStep, StepCounter.currentDistance));
     }
 
 }

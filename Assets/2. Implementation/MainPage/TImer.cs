@@ -22,7 +22,7 @@ public class TImer : MonoBehaviour
     //[SerializeField]
     //private Text steps;
 
-    public static int TimerCurrentStep;
+    public static int TimerCurrentTime;
 
     [SerializeField]
     private bool countDown;
@@ -101,7 +101,7 @@ public class TImer : MonoBehaviour
         secondMinute.text = currrentTime[1].ToString();
         firstSecond.text = currrentTime[2].ToString();
         secondSecond.text = currrentTime[3].ToString();
-        TimerCurrentStep = (int)time;
+        TimerCurrentTime = (int)time;
         //steps.text = TimerCurrentStep.ToString();
 
         //if ((int)timer % 20 == 0)

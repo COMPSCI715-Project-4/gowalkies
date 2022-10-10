@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Timers;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 using UIWidgets;
 using PedometerU.Tests;
 
@@ -44,6 +45,7 @@ public class EvolutionProgressBar : MonoBehaviour
 
     private int previousStep = 0;
     private bool gameStart = false;
+    private string token;
     
 
     [SerializeField]
@@ -53,7 +55,15 @@ public class EvolutionProgressBar : MonoBehaviour
 
     [SerializeField]
     private GameObject[] pets;
+    [SerializeField]
+    private Camera mainCamera; 
 
+
+    private void Start()
+    {
+        Database database = new Database();
+        token = database.Token();
+    }
 
     public void startGame()
     {
@@ -70,6 +80,8 @@ public class EvolutionProgressBar : MonoBehaviour
 
         initialMax = max;
         currentEvo = 1;
+        //Vector3 offset = new Vector3(0, 10, 0);
+        //Vector3 position = mainCamera.transform.position + offset;
         pet = Instantiate(pets[0]); 
         stepAverage = stepAverageGoal;
 
@@ -99,6 +111,11 @@ public class EvolutionProgressBar : MonoBehaviour
         currentStepText.text = stepAverage.ToString();
         previousStep = currentStep;
         Debug.Log(stepAverage); 
+    }
+
+    public void SaveStatus()
+    {
+        StartCoroutine(UpdateRankHandler(token, currentEvo, currentStep, StepCounter.currentDistance));
     }
 
     private void Update()
@@ -139,7 +156,13 @@ public class EvolutionProgressBar : MonoBehaviour
                     progressSlider.value = timer / max;
                 Timer();
                 if (progressSlider.value == 0 && currentEvo != 1 && timer <= 0)
+                {
+                    //User has not maintain their average steps.
+                    Destroy(pet);
+                    pet = Instantiate(pets[0]); 
                     ResetTimer();
+                }
+
             }
             else if (timer >= max)
             {
@@ -152,8 +175,6 @@ public class EvolutionProgressBar : MonoBehaviour
                 timer = max - 0.01f;
                 paused = true;
             }
-
-
         }
 
 
@@ -167,11 +188,10 @@ public class EvolutionProgressBar : MonoBehaviour
             if (fill == true)
             {
                 //pet.transform.localScale = (currentEvo + 1) * size;
-                Vector3 position = pet.transform.position;
                 Destroy(pet);
-
+                Vector3 position = new Vector3(0, 0, 0); 
                 pet = Instantiate(pets[currentEvo], position, Quaternion.identity);
-                Debug.Log(pet.name); 
+                //Debug.Log(pet.name); 
               
             }
 
@@ -270,20 +290,50 @@ public class EvolutionProgressBar : MonoBehaviour
             {
                 max += increaseRatio[currentEvo - 1];
                 currentEvo++;
-
             }
+            StartCoroutine(UpdateRankHandler(token, currentEvo, currentStep, StepCounter.currentDistance));
 
         }
         else if (fill == false)
         {
             max = initialMax;
             currentEvo = 1;
+            StartCoroutine(UpdateRankHandler(token, currentEvo, currentStep, StepCounter.currentDistance));
         }
         evolutionLevelText.text = "Level " + currentEvo;
     }
 
+    IEnumerator UpdateRankHandler(string token, int level, int steps, float distance)
+    {
+
+        WWWForm form = new WWWForm();
+        form.AddField("token", token);
+        form.AddField("kind", "evolution");
+        form.AddField("level", (level - 1).ToString());
+        form.AddField("steps", steps.ToString());
+        form.AddField("distance", distance.ToString());
+        form.AddField("duration", TImer.TimerCurrentTime.ToString());
+
+        UnityWebRequest www = UnityWebRequest.Post("http://82.157.148.219/rank/update", form);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            UserResponse resp = UserResponse.CreateFromJSON(www.downloadHandler.text);
+            UserInfo info = resp.data;
+            Debug.Log(info.ToJson());
+            UserDetails.info = info;
+            Database db = new Database();
+            db.Store(info);
+        }
+    }
+
     private void OnDestroy()
     {
-        
+        StartCoroutine(UpdateRankHandler(token, currentEvo, currentStep, StepCounter.currentDistance));
     }
 }
