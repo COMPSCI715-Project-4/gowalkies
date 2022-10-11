@@ -23,7 +23,7 @@ public class AnimalController : MonoBehaviour
     private void FixedUpdate()
     {
         if (_joyStick !=null){
-            _rigyBody.velocity = new Vector3(-_joyStick.Horizontal * _moveSpeed, _rigyBody.velocity.y, -_joyStick.Vertical * _moveSpeed);
+            _rigyBody.velocity = new Vector3(_joyStick.Horizontal * _moveSpeed, _rigyBody.velocity.y, _joyStick.Vertical * _moveSpeed);
             if (_joyStick.Horizontal != 0 || _joyStick.Vertical != 0)
             {
                 transform.rotation = Quaternion.LookRotation(_rigyBody.velocity);

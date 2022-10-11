@@ -91,7 +91,6 @@ public class TicketProgressBar : MonoBehaviour
 
         initialMax = max;
         currentEvo = 1;
-        Instantiate(pet); 
         stepAverage = stepAverageGoal;
         stepCounter = GetComponent<StepCounter>();
 

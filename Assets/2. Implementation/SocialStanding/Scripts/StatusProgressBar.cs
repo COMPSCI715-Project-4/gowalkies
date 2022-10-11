@@ -98,7 +98,7 @@ public class StatusProgressBar : MonoBehaviour
         statusesUnlocked.AddOptions(unlocked);
         stepAverage = stepAverageGoal;
         stepCounter = GetComponent<StepCounter>();
-        Instantiate(pet); 
+        //Instantiate(pet); 
         //following codes are the timer for calculating the current step
         //handle update function will call every 20 seconds
         Timer();

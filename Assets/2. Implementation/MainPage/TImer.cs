@@ -5,7 +5,7 @@ using PedometerU.Tests;
 
 public class TImer : MonoBehaviour
 {
-    private float timeDuration = 5f * 60f;
+    private float timeDuration = 20f * 60f;
     private float timer;
 
     [SerializeField]

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using UIWidgets;
 using PedometerU.Tests;
+using UnityEngine.XR.ARFoundation.Samples;
 
 public class EvolutionProgressBar : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class EvolutionProgressBar : MonoBehaviour
     public Text keepStatusText;
     public Text lossStatusText;
     private Timer t = new Timer();
-    
+
     private GameObject pet;
 
     private int currentStep;
@@ -46,7 +47,7 @@ public class EvolutionProgressBar : MonoBehaviour
     private int previousStep = 0;
     private bool gameStart = false;
     private string token;
-    
+
 
     [SerializeField]
     private Text currentStepText;
@@ -56,33 +57,40 @@ public class EvolutionProgressBar : MonoBehaviour
     [SerializeField]
     private GameObject[] pets;
     [SerializeField]
-    private Camera mainCamera; 
+    private Camera mainCamera;
+
+    public static bool inEvoGame;
+    public static int currentLevel; 
 
 
     private void Start()
     {
         Database database = new Database();
         token = database.Token();
+        //inEvoGame = true; 
     }
 
     public void startGame()
     {
+        inEvoGame = true;
+
         //set the personal step goal
         //come from the Intensity Test
         //stepAverageGoal = testAverageStep.averageStep; //this should be uncommented when we exported the app. Link to the average eintensity test
 
         //this can be accessed and changed from the inspector
         //testing purpose
-
-        increaseRatio = new float[]{ 10f, 20f, 30f}; 
+        pet = GameObject.FindGameObjectWithTag("pets"); 
+        increaseRatio = new float[] { 10f, 20f, 30f };
         stepAverageGoal = testAverageStep.averageStep;
-        averageStepText.text = stepAverageGoal.ToString(); 
+        averageStepText.text = stepAverageGoal.ToString();
 
         initialMax = max;
         currentEvo = 1;
         //Vector3 offset = new Vector3(0, 10, 0);
         //Vector3 position = mainCamera.transform.position + offset;
-        pet = Instantiate(pets[0]); 
+        //Debug.Log
+        //pet = Instantiate(pets[0], PlaceOnPlane.newHitPosition, Quaternion.identity);
         stepAverage = stepAverageGoal;
 
         //following codes are the timer for calculating the current step
@@ -110,11 +118,13 @@ public class EvolutionProgressBar : MonoBehaviour
         stepAverage = currentStep - previousStep;
         currentStepText.text = stepAverage.ToString();
         previousStep = currentStep;
-        Debug.Log(stepAverage); 
+        Debug.Log(stepAverage);
     }
 
     public void SaveStatus()
     {
+        inEvoGame = false;
+
         StartCoroutine(UpdateRankHandler(token, currentEvo, currentStep, StepCounter.currentDistance));
     }
 
@@ -159,7 +169,7 @@ public class EvolutionProgressBar : MonoBehaviour
                 {
                     //User has not maintain their average steps.
                     Destroy(pet);
-                    pet = Instantiate(pets[0]); 
+                    pet = Instantiate(pets[0]);
                     ResetTimer();
                 }
 
@@ -187,24 +197,39 @@ public class EvolutionProgressBar : MonoBehaviour
             Vector3 size = new Vector3(0.2f, 0.2f, 0.2f);
             if (fill == true)
             {
-                //pet.transform.localScale = (currentEvo + 1) * size;
-                Destroy(pet);
-                Vector3 position = new Vector3(0, 0, 0); 
+                GameObject[] currentPets = GameObject.FindGameObjectsWithTag("pets");
+                for (int i = 0; i < currentPets.Length; i++)
+                {
+                    Destroy(currentPets[i]);
+                }
+                Vector3 position = pet.transform.position;
+
+
                 pet = Instantiate(pets[currentEvo], position, Quaternion.identity);
-                //Debug.Log(pet.name); 
-              
+                currentLevel = currentEvo; 
+
+
+
             }
 
             else if (fill == false)
             {
-                pet = pets[0];
+                GameObject[] currentPets = GameObject.FindGameObjectsWithTag("pets");
+                for (int i = 0; i < currentPets.Length; i++)
+                {
+                    Destroy(currentPets[i]);
+                }
+                Vector3 position = pet.transform.position;
 
+
+                pet = Instantiate(pets[0], position, Quaternion.identity);
+                currentLevel = currentEvo;
             }
             Timer();
         }
         else
         {
-     
+
         }
     }
 
@@ -255,14 +280,14 @@ public class EvolutionProgressBar : MonoBehaviour
                 notifyPad.SetActive(false);
                 finishPanel.SetActive(true);
             }
-            
+
             if (currentEvo >= 2)
             {
                 nextStatusText.text = "Congrats you've reached max level!";
             }
             else
                 nextStatusText.text = "Next Evolution Level: " + (currentEvo + 2);
-            
+
         }
         else if (fill == false)
         {
@@ -334,6 +359,8 @@ public class EvolutionProgressBar : MonoBehaviour
 
     private void OnDestroy()
     {
+        inEvoGame = false;
+
         StartCoroutine(UpdateRankHandler(token, currentEvo, currentStep, StepCounter.currentDistance));
     }
 }

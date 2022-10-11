@@ -24,6 +24,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         public Vector3 position; 
 
+
+        public static Vector3 newHitPosition; 
         /// <summary>
         /// The prefab to instantiate on touch.
         /// </summary>
@@ -60,15 +62,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // will be the closest hit.
                 var hitPose = s_Hits[0].pose;
 
+                newHitPosition = hitPose.position;
                 if (spawnedObject == null)
                 {
-                    ////Vector3 offset = new Vector3(10, 0, 0);
-                    //Vector3 newPosition = mainCamera.transform.position + position;
-                    //spawnedObject = Instantiate(m_PlacedPrefab, newPosition, Quaternion.identity);
+                    spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
                 }
                 else
                 {
-                    //spawnedObject.transform.position = hitPose.position;
+
+                    
                 }
             }
         }
