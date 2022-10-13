@@ -43,7 +43,7 @@ public class ProgressBar : MonoBehaviour
         else
         {
             ResetTimer();
-            //LevelUp();
+
         }
     }
 

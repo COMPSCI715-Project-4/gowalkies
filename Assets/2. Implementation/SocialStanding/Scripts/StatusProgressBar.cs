@@ -29,7 +29,7 @@ public class StatusProgressBar : MonoBehaviour
     private bool increase = false;
     private bool decrease = false;
     private float stepAverage;
-    private StepCounter stepCounter;
+    //private StepCounter stepCounter;
 
     public static List<string> statusNames = new List<string> { "Pet Newbie", "Pet Lover", "Pet Master", "Pet Legend" };
     private List<string> unlocked = new List<string> { "Pet Newbie" };
@@ -97,14 +97,14 @@ public class StatusProgressBar : MonoBehaviour
         statusesUnlocked.ClearOptions();
         statusesUnlocked.AddOptions(unlocked);
         stepAverage = stepAverageGoal;
-        stepCounter = GetComponent<StepCounter>();
+        //stepCounter = GetComponent<StepCounter>();
         //Instantiate(pet); 
         //following codes are the timer for calculating the current step
         //handle update function will call every 20 seconds
         Timer();
         gameStart = true;
         t.Elapsed += new ElapsedEventHandler(handleUpdate);
-        t.Interval = 20000;
+        t.Interval = 10000;
         t.Start();
 
     }
@@ -119,10 +119,11 @@ public class StatusProgressBar : MonoBehaviour
         //currentStep = TImer.TimerCurrentStep;
 
 
-        currentStep = stepCounter.GetSteps(); //should be uncommented when we want to exported the app
+        currentStep = StepCounter.GetSteps(); //should be uncommented when we want to exported the app
         stepAverage = currentStep - previousStep;
         previousStep = currentStep;
         Debug.Log(stepAverage);
+        StartCoroutine(UpdateRankHandler(token, currentStatus, currentStep, StepCounter.currentDistance));
     }
 
 

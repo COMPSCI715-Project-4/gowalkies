@@ -4,7 +4,7 @@ using TMPro;
 
 public class IntensityTImer : MonoBehaviour
 {
-    private float timeDuration = 1f * 60f;
+    private float timeDuration = 1f * 40f;
     [SerializeField]
     private float timer;
     private float step;

@@ -13,13 +13,17 @@ namespace PedometerU.Tests {
         public Text stepText, distanceText;
         private Pedometer pedometer;
         public static int currentSteps = 0;
-        public static float currentDistance = 0; 
+        public static float currentDistance = 0;
 
+        private void Start()
+        {
+            pedometer = new Pedometer(OnStep);
+        }
 
         public void startStep()
         {
             // Create a new pedometer
-            pedometer = new Pedometer(OnStep);
+
             // Reset UI
             OnStep(0, 0);
         }
@@ -38,7 +42,7 @@ namespace PedometerU.Tests {
             pedometer = null;
         }
 
-        public int GetSteps()
+        public static int GetSteps()
         { 
             return currentSteps;
         }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PedometerU;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 
@@ -22,13 +23,21 @@ public class testAverageStep : MonoBehaviour
 
 
     public static int averageStep;
+    string token;
 
+
+    private void Start()
+    {
+        Database db = new Database();
+        token = db.Token();
+        pedometer = new Pedometer(OnStep);
+    }
 
     public void startStep()
     {
         // Create a new pedometer
         Debug.Log("step count start");
-        pedometer = new Pedometer(OnStep);
+
 
         // Reset UI
         OnStep(0, 0);
@@ -59,11 +68,13 @@ public class testAverageStep : MonoBehaviour
     {
         if (stepsText.text != null)
         {
-            averageStep = Mathf.FloorToInt(int.Parse(stepsText.text) / 6);
+            averageStep = Mathf.FloorToInt(int.Parse(stepsText.text) / 4);
+
             Debug.Log(averageStep);
             averageStepText.text = averageStep.ToString();
             averageStepNotify.SetActive(true);
 
+            StartCoroutine(UpdateHandler());
         }
         else
         {
@@ -71,8 +82,21 @@ public class testAverageStep : MonoBehaviour
             averageStepText.text = "Your average step is Null";
 
         }
-
     }
 
+    IEnumerator UpdateHandler()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("token", token);
+        form.AddField("average_steps", averageStep.ToString());
 
+        UnityWebRequest www = UnityWebRequest.Post("http://82.157.148.219/intensity", form);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+
+            Debug.Log(www.error);
+        }
+    }
 }

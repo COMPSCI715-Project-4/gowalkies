@@ -22,7 +22,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         private Camera mainCamera;
 
         [SerializeField]
-        public Vector3 position; 
+        public Vector3 position;
+        private bool reset;
 
 
         public static Vector3 newHitPosition; 
@@ -69,10 +70,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
                 else
                 {
+                    if (reset)
+                    {
+                        spawnedObject.transform.position = hitPose.position;
+                        reset = false;
+                    }
 
-                    
                 }
             }
+        }
+
+        public void ResetPositon()
+        {
+            reset = true;
         }
 
         protected override void OnPress(Vector3 position) => m_Pressed = true;

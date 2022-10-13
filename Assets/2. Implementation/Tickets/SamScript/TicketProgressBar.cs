@@ -51,7 +51,8 @@ public class TicketProgressBar : MonoBehaviour
     private float stepAverage;
 
     // Step Counter variables
-    private StepCounter stepCounter;
+
+    //private StepCounter stepCounter;
     private int previousStep = 0;
     private bool gameStart = false;
 
@@ -92,7 +93,6 @@ public class TicketProgressBar : MonoBehaviour
         initialMax = max;
         currentEvo = 1;
         stepAverage = stepAverageGoal;
-        stepCounter = GetComponent<StepCounter>();
 
         //following codes are the timer for calculating the current step
         //handle update function will call every 20 seconds
@@ -113,7 +113,7 @@ public class TicketProgressBar : MonoBehaviour
         //currentStep = TImer.TimerCurrentStep;
 
 
-        currentStep = stepCounter.GetSteps(); //should be uncommented when we want to exported the app
+        currentStep = StepCounter.currentSteps; //should be uncommented when we want to exported the app
         //Debug.Log(stepAverage);
         Debug.Log(extra_step.ToString()); 
 
@@ -347,15 +347,14 @@ public class TicketProgressBar : MonoBehaviour
             if (currentEvo <= 4)
                 currentEvo++;
                 once = false;
-            SaveStatus();
         }
         else if (fill == false)
         {
             max = initialMax;
             currentEvo = 1;
-            SaveStatus();
         }
         evolutionLevelText.text = "Level " + currentEvo;
+
         fill = true;
         stepAverage = stepAverageGoal;
     }

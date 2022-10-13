@@ -50,7 +50,15 @@ public class CreateRankText : MonoBehaviour
                 Debug.Log(rank.ToJson());
                 
                 listItemPrefab.transform.GetChild(0).GetComponentInChildren<Text>().text = rank.username;
-                listItemPrefab.transform.GetChild(1).GetComponentInChildren<Text>().text = StatusProgressBar.statusNames[(int) rank.level];
+                if (rank.level >= 4)
+                {
+                    listItemPrefab.transform.GetChild(1).GetComponentInChildren<Text>().text = StatusProgressBar.statusNames[3];
+                }
+                else
+                {
+                    listItemPrefab.transform.GetChild(1).GetComponentInChildren<Text>().text = StatusProgressBar.statusNames[(int) rank.level];
+                }
+                
                 listItemPrefab.transform.GetChild(2).GetComponentInChildren<Text>().text = rank.highest_steps.ToString();
                 Instantiate(listItemPrefab, listItemHolder);
 

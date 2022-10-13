@@ -52,6 +52,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             base.Awake();
             m_RaycastManager = GetComponent<ARRaycastManager>();
+            
         }
 
         void Update()
@@ -71,22 +72,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 newHitPosition = hitPose.position;
                 if (spawnedObject == null)
                 {
-                    spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
+                    Debug.Log(EvolutionProgressBar.currentLevel); 
+                    spawnedObject = Instantiate(pets[EvolutionProgressBar.currentLevel], hitPose.position, hitPose.rotation);
                 }
                 else
                 {
-
                     if (reset)
                     {
-                        GameObject[] currentPets = GameObject.FindGameObjectsWithTag("pets");
-                        for (int i = 0; i < currentPets.Length; i++)
-                        {
-                            currentPets[i].transform.position = hitPose.position;
-                        }
-                       
+                        spawnedObject.transform.position = hitPose.position;
                         reset = false; 
-
                     }
+                 
                 }
             }
         }
@@ -94,6 +90,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void ResetPositon()
         {
             reset = true; 
+        }
+
+
+        public void changePetsFunc(int currentValue)
+        {
+            var touchPosition = Pointer.current.position.ReadValue();
+
+            if (m_RaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon))
+            {
+                // Raycast hits are sorted by distance, so the first one
+                // will be the closest hit.
+                var hitPose = s_Hits[0].pose;
+
+                spawnedObject = Instantiate(pets[currentValue], hitPose.position, hitPose.rotation);
+            }
         }
 
         protected override void OnPress(Vector3 position) => m_Pressed = true;

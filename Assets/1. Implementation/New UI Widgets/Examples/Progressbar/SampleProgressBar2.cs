@@ -49,6 +49,7 @@
 				else
 				{
 					Bar.Animate(0);
+					
 				}
 			}
 		}

@@ -60,7 +60,7 @@ public class EvolutionProgressBar : MonoBehaviour
     private Camera mainCamera;
 
     public static bool inEvoGame;
-    public static int currentLevel; 
+    public static int currentLevel = 0;
 
 
     private void Start()
@@ -80,17 +80,14 @@ public class EvolutionProgressBar : MonoBehaviour
 
         //this can be accessed and changed from the inspector
         //testing purpose
-        pet = GameObject.FindGameObjectWithTag("pets"); 
+
         increaseRatio = new float[] { 10f, 20f, 30f };
         stepAverageGoal = testAverageStep.averageStep;
         averageStepText.text = stepAverageGoal.ToString();
 
         initialMax = max;
         currentEvo = 1;
-        //Vector3 offset = new Vector3(0, 10, 0);
-        //Vector3 position = mainCamera.transform.position + offset;
-        //Debug.Log
-        //pet = Instantiate(pets[0], PlaceOnPlane.newHitPosition, Quaternion.identity);
+        currentLevel = 0; 
         stepAverage = stepAverageGoal;
 
         //following codes are the timer for calculating the current step
@@ -130,7 +127,7 @@ public class EvolutionProgressBar : MonoBehaviour
 
     private void Update()
     {
-
+        pet = GameObject.FindGameObjectWithTag("pets");
         if (gameStart)
         {
 
@@ -164,12 +161,14 @@ public class EvolutionProgressBar : MonoBehaviour
                     progressSlider.value = timer / max;
                 else if (decrease)
                     progressSlider.value = timer / max;
+
                 Timer();
+
                 if (progressSlider.value == 0 && currentEvo != 1 && timer <= 0)
                 {
-                    //User has not maintain their average steps.
-                    Destroy(pet);
-                    pet = Instantiate(pets[0]);
+                    ////User has not maintain their average steps.
+                    //Destroy(pet);
+                    //currentLevel = 1; 
                     ResetTimer();
                 }
 
@@ -178,7 +177,7 @@ public class EvolutionProgressBar : MonoBehaviour
             {
                 //Debug.Log("Here1");
                 ResetTimer();
-                ChangeSize();
+                ChangePets();
             }
             else if (currentEvo == 4 && fill != false)
             {
@@ -190,46 +189,21 @@ public class EvolutionProgressBar : MonoBehaviour
 
     }
 
-    public void ChangeSize()
+    public void ChangePets()
     {
         if (pet != null)
         {
-            Vector3 size = new Vector3(0.2f, 0.2f, 0.2f);
             if (fill == true)
             {
-                GameObject[] currentPets = GameObject.FindGameObjectsWithTag("pets");
-                for (int i = 0; i < currentPets.Length; i++)
-                {
-                    Destroy(currentPets[i]);
-                }
-                Vector3 position = pet.transform.position;
-
-
-                pet = Instantiate(pets[currentEvo], position, Quaternion.identity);
-                currentLevel = currentEvo; 
-
-
-
+                //Destroy(pet);
+                //currentLevel = currentEvo; 
             }
-
             else if (fill == false)
             {
-                GameObject[] currentPets = GameObject.FindGameObjectsWithTag("pets");
-                for (int i = 0; i < currentPets.Length; i++)
-                {
-                    Destroy(currentPets[i]);
-                }
-                Vector3 position = pet.transform.position;
-
-
-                pet = Instantiate(pets[0], position, Quaternion.identity);
-                currentLevel = currentEvo;
+                //Destroy(pet);
+                //currentLevel = 1; 
             }
             Timer();
-        }
-        else
-        {
-
         }
     }
 
@@ -314,16 +288,20 @@ public class EvolutionProgressBar : MonoBehaviour
             if (currentEvo < 4)
             {
                 max += increaseRatio[currentEvo - 1];
+                Destroy(pet);
+                currentLevel = currentEvo;
                 currentEvo++;
+
             }
-            StartCoroutine(UpdateRankHandler(token, currentEvo, currentStep, StepCounter.currentDistance));
+
 
         }
         else if (fill == false)
         {
             max = initialMax;
+            Destroy(pet);
+            currentLevel = 0;
             currentEvo = 1;
-            StartCoroutine(UpdateRankHandler(token, currentEvo, currentStep, StepCounter.currentDistance));
         }
         evolutionLevelText.text = "Level " + currentEvo;
     }
@@ -357,10 +335,10 @@ public class EvolutionProgressBar : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        inEvoGame = false;
+    //private void OnDestroy()
+    //{
+    //    inEvoGame = false;
 
-        StartCoroutine(UpdateRankHandler(token, currentEvo, currentStep, StepCounter.currentDistance));
-    }
+    //    StartCoroutine(UpdateRankHandler(token, currentEvo, currentStep, StepCounter.currentDistance));
+    //}
 }
