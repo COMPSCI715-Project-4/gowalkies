@@ -55,23 +55,6 @@ public class StatusProgressBar : MonoBehaviour
     [SerializeField]
     public GameObject pet;
 
-
-    //private void Start()
-    //{
-    //    stepAverageGoal = 29; 
-    //    initialMax = max;
-    //    currentStatus = 0;
-    //    statusText.text = statusNames[currentStatus];
-    //    statusesUnlocked.ClearOptions();
-    //    statusesUnlocked.AddOptions(unlocked);
-    //    stepAverage = stepAverageGoal;
-    //    stepCounter = GetComponent<StepCounter>();
-    //    Timer();
-
-
-
-    //}
-
     private void Start()
     {
         Database database = new Database();
@@ -83,13 +66,8 @@ public class StatusProgressBar : MonoBehaviour
 
     public void startGame()
     {
-        //set the personal step goal
-        //come from the Intensity Test
-        stepAverageGoal = testAverageStep.averageStep; //this should be uncommented when we exported the app. Link to the average eintensity test
-
-        //this can be accessed and changed from the inspector
-        //testing purpose
-        //stepAverageGoal = 19;
+        //The stepGoalAverage comes from the Intensity Test
+        stepAverageGoal = testAverageStep.averageStep;
         initialMax = max;
         increaseRatio = new float[] { 10f, 20f, 30f };
         currentStatus = 0;
@@ -97,10 +75,9 @@ public class StatusProgressBar : MonoBehaviour
         statusesUnlocked.ClearOptions();
         statusesUnlocked.AddOptions(unlocked);
         stepAverage = stepAverageGoal;
-        //stepCounter = GetComponent<StepCounter>();
-        //Instantiate(pet); 
-        //following codes are the timer for calculating the current step
-        //handle update function will call every 20 seconds
+
+        //The following code is the timer for calculating the current step
+        //Update function will call every 20 seconds
         Timer();
         gameStart = true;
         t.Elapsed += new ElapsedEventHandler(handleUpdate);
@@ -110,19 +87,12 @@ public class StatusProgressBar : MonoBehaviour
     }
 
 
-    //calculate the average step
+    // This function calculates the average step
     private void handleUpdate(object source, ElapsedEventArgs e)
     {
-
-        //testing purpose
-        //step increment one by one sec
-        //currentStep = TImer.TimerCurrentStep;
-
-
-        currentStep = StepCounter.GetSteps(); //should be uncommented when we want to exported the app
+        currentStep = StepCounter.GetSteps();
         stepAverage = currentStep - previousStep;
         previousStep = currentStep;
-        Debug.Log(stepAverage);
         StartCoroutine(UpdateRankHandler(token, currentStatus, currentStep, StepCounter.currentDistance));
     }
 
@@ -131,23 +101,19 @@ public class StatusProgressBar : MonoBehaviour
     {
         if (gameStart)
         {
-            // Testing purposes
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-                stepAverage = stepAverageGoal;
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
-                stepAverage = 0;
-
             if (timer < max && keepTiming)
             {
                 // We ignore the first timeframe and check if the time is a multiple of the timeframe e.g. 20
                 if ((int)timer % timeframe == 0)
                 {
+                    // If the player maintains the step average then the bar will increase
                     if (stepAverage >= stepAverageGoal)
                     {
                         fill = true;
                         increase = true;
                         decrease = false;
                     }
+                    // Else if the player does not maintain the step average then the bar will decrease
                     else if (stepAverage < stepAverageGoal)
                     {
                         fill = false;
@@ -155,21 +121,18 @@ public class StatusProgressBar : MonoBehaviour
                         increase = false;
                     }
                 }
+                // Update the progress slider, inceasing or decreasing
                 if (increase)
                     progressSlider.value = timer / max;
                 else if (decrease)
                     progressSlider.value = timer / max;
                 Timer();
+                // If the progress slider drops to 0 then reset the timer
                 if (progressSlider.value == 0 && currentStatus != 0 && timer <= 0)
                     ResetTimer();
             }
-
             else if (timer >= max)
-            {
                 ResetTimer();
-            }
-            
-
         }
     }
 
@@ -195,6 +158,7 @@ public class StatusProgressBar : MonoBehaviour
         paused = false;
     }
 
+    // Resets the timer and edits text objects
     public void ResetTimer()
     {
         timer = 0.01f;
@@ -205,6 +169,7 @@ public class StatusProgressBar : MonoBehaviour
         GameObject increaseImage = statusPanel.transform.GetChild(0).gameObject;
         GameObject decreaseImage = statusPanel.transform.GetChild(1).gameObject;
 
+        // If the progress bar is increasing
         if (fill == true)
         {
             finishPanel.SetActive(false);
@@ -229,6 +194,7 @@ public class StatusProgressBar : MonoBehaviour
             StartCoroutine(UpdateRankHandler(token, currentStatus, currentStep, StepCounter.currentDistance));
 
         }
+        // If the progress bar is decreasing
         else if (fill == false)
         {
             progressSlider.value = max;
@@ -245,12 +211,13 @@ public class StatusProgressBar : MonoBehaviour
         }
     }
 
+    // This function is called when the close panel button is pressed after gaining an item
     public void closePanel()
     {
-        Debug.Log("close panel"); 
         keepTiming = true;
         notifyPad.SetActive(false);
 
+        // If the progress bar is increasing
         if (fill == true)
         {
             max += increaseRatio[currentStatus];
@@ -265,6 +232,7 @@ public class StatusProgressBar : MonoBehaviour
             statusesUnlocked.captionText.text = statusNames[currentStatus];
             StartCoroutine(UpdateRankHandler(token, currentStatus, currentStep, StepCounter.currentDistance));
         }
+        // If the progress bar is decreasing
         else if (fill == false)
         {
             max = initialMax;
@@ -309,7 +277,6 @@ public class StatusProgressBar : MonoBehaviour
         }
         else
         {
-            Debug.Log("here");
             UserResponse resp = UserResponse.CreateFromJSON(www.downloadHandler.text);
             UserInfo info = resp.data;
             Debug.Log(info.ToJson());
@@ -321,7 +288,6 @@ public class StatusProgressBar : MonoBehaviour
 
     private void OnDestroy()
     {
-        
         StartCoroutine(UpdateRankHandler(token, currentStatus, currentStep, StepCounter.currentDistance));
     }
 

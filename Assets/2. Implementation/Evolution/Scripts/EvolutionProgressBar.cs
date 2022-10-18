@@ -67,22 +67,14 @@ public class EvolutionProgressBar : MonoBehaviour
     {
         Database database = new Database();
         token = database.Token();
-        //inEvoGame = true; 
     }
 
     public void startGame()
     {
-        inEvoGame = true;
-
-        //set the personal step goal
-        //come from the Intensity Test
-        //stepAverageGoal = testAverageStep.averageStep; //this should be uncommented when we exported the app. Link to the average eintensity test
-
-        //this can be accessed and changed from the inspector
-        //testing purpose
-
-        increaseRatio = new float[] { 10f, 20f, 30f };
+        //The stepGoalAverage comes from the Intensity Test
         stepAverageGoal = testAverageStep.averageStep;
+        inEvoGame = true;
+        increaseRatio = new float[] { 10f, 20f, 30f };
         averageStepText.text = stepAverageGoal.ToString();
 
         initialMax = max;
@@ -90,8 +82,8 @@ public class EvolutionProgressBar : MonoBehaviour
         currentLevel = 0; 
         stepAverage = stepAverageGoal;
 
-        //following codes are the timer for calculating the current step
-        //handle update function will call every 20 seconds
+        //The following code is the timer for calculating the current step
+        //Update function will call every 20 seconds
         Timer();
         gameStart = true;
         t.Elapsed += new ElapsedEventHandler(handleUpdate);
@@ -101,21 +93,13 @@ public class EvolutionProgressBar : MonoBehaviour
     }
 
 
-    //calculate the average step
+    // This function calculates the average step
     private void handleUpdate(object source, ElapsedEventArgs e)
     {
-
-        //testing purpose
-        //step increment one by one sec
-        //currentStep = TImer.TimerCurrentStep;
-
-
-        currentStep = StepCounter.currentSteps; //should be uncommented when we want to exported the app
-
+        currentStep = StepCounter.currentSteps;
         stepAverage = currentStep - previousStep;
         currentStepText.text = stepAverage.ToString();
         previousStep = currentStep;
-        Debug.Log(stepAverage);
     }
 
     public void SaveStatus()
@@ -130,26 +114,19 @@ public class EvolutionProgressBar : MonoBehaviour
         pet = GameObject.FindGameObjectWithTag("pets");
         if (gameStart)
         {
-
-            // Testing purposes
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-                stepAverage = stepAverageGoal;
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
-                stepAverage = 0;
-
             if (timer < max && keepTiming)
             {
-
                 // We ignore the first timeframe and check if the time is a multiple of the timeframe e.g. 20
                 if ((int)timer % timeframe == 0)
                 {
-
+                    // If the player maintains the step average then the bar will increase
                     if (stepAverage >= stepAverageGoal)
                     {
                         fill = true;
                         increase = true;
                         decrease = false;
                     }
+                    // Else if the player does not maintain the step average then the bar will decrease
                     else if (stepAverage < stepAverageGoal)
                     {
                         fill = false;
@@ -157,25 +134,19 @@ public class EvolutionProgressBar : MonoBehaviour
                         increase = false;
                     }
                 }
+                // Update the progress slider, inceasing or decreasing
                 if (increase)
                     progressSlider.value = timer / max;
                 else if (decrease)
                     progressSlider.value = timer / max;
-
                 Timer();
 
+                // If the progress slider drops to 0 then reset the timer
                 if (progressSlider.value == 0 && currentEvo != 1 && timer <= 0)
-                {
-                    ////User has not maintain their average steps.
-                    //Destroy(pet);
-                    //currentLevel = 1; 
                     ResetTimer();
-                }
-
             }
             else if (timer >= max)
             {
-                //Debug.Log("Here1");
                 ResetTimer();
                 ChangePets();
             }
@@ -229,9 +200,9 @@ public class EvolutionProgressBar : MonoBehaviour
         paused = false;
     }
 
+    // Resets the timer and edits text objects
     public void ResetTimer()
     {
-        //Debug.Log("Here2");
         timer = 0.01f;
         keepTiming = false;
         notifyPad.SetActive(true);
@@ -240,6 +211,7 @@ public class EvolutionProgressBar : MonoBehaviour
         GameObject increaseImage = statusPanel.transform.GetChild(0).gameObject;
         GameObject decreaseImage = statusPanel.transform.GetChild(1).gameObject;
 
+        // If the progress bar is increasing
         if (fill == true)
         {
             finishPanel.SetActive(false);
@@ -263,6 +235,7 @@ public class EvolutionProgressBar : MonoBehaviour
                 nextStatusText.text = "Next Evolution Level: " + (currentEvo + 2);
 
         }
+        // If the progress bar is decreasing
         else if (fill == false)
         {
             progressSlider.value = max;
@@ -278,11 +251,13 @@ public class EvolutionProgressBar : MonoBehaviour
         }
     }
 
+    // This function is called when the close panel button is pressed after gaining an item
     public void ClosePanel()
     {
         keepTiming = true;
         notifyPad.SetActive(false);
 
+        // If the progress bar is increasing
         if (fill == true)
         {
             if (currentEvo < 4)
@@ -291,11 +266,9 @@ public class EvolutionProgressBar : MonoBehaviour
                 Destroy(pet);
                 currentLevel = currentEvo;
                 currentEvo++;
-
             }
-
-
         }
+        // If the progress bar is decreasing
         else if (fill == false)
         {
             max = initialMax;
@@ -334,11 +307,4 @@ public class EvolutionProgressBar : MonoBehaviour
             db.Store(info);
         }
     }
-
-    //private void OnDestroy()
-    //{
-    //    inEvoGame = false;
-
-    //    StartCoroutine(UpdateRankHandler(token, currentEvo, currentStep, StepCounter.currentDistance));
-    //}
 }
