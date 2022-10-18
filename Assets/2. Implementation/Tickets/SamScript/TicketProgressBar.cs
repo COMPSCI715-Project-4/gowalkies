@@ -62,6 +62,7 @@ public class TicketProgressBar : MonoBehaviour
     private string token;
 
 
+    // when the game is started
     private void Start()
     {
         // initialMax = max;
@@ -69,11 +70,13 @@ public class TicketProgressBar : MonoBehaviour
         // pet = GameObject.FindWithTag("pets");
         fill = false;
         
+        // Create the database
         Database database = new Database();
         token = database.Token();
 
     }
 
+    // Once game start button is clicked
     public void GameStart()
     {
         increaseRatio = new float[] { 10f, 20f, 30f };
@@ -125,10 +128,13 @@ public class TicketProgressBar : MonoBehaviour
         //Debug.Log(stepAverage); 
     }
 
+    // Update the game
     private void Update()
     {   
+        // Game is started
         if (gameStart)
-        {
+        {   
+            // Used to check if progress bar is working
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
                 stepAverage = stepAverageGoal;
@@ -144,7 +150,7 @@ public class TicketProgressBar : MonoBehaviour
                 // We ignore the first timeframe and check if the time is a multiple of the timeframe e.g. 20
                 if ((int)timer % timeframe == 0)
                 {
-
+                    // increase progress bar
                     if (stepAverage >= stepAverageGoal)
                     {
                         fill = true;
@@ -152,6 +158,7 @@ public class TicketProgressBar : MonoBehaviour
                         decrease = false;
                     }
 
+                    // decrease progess bar
                     else if (stepAverage < stepAverageGoal)
                     {
                         fill = false;
@@ -185,6 +192,7 @@ public class TicketProgressBar : MonoBehaviour
                 ResetTimer();
             }
 
+            // Session finished
             else if (currentEvo > 4 && fill != false)
             {
                 timer = max - 0.01f;
@@ -194,6 +202,7 @@ public class TicketProgressBar : MonoBehaviour
         }
     }
 
+    // Change size of the pets
     public void ChangeSize()
     {
         if (pet != null)
@@ -239,6 +248,7 @@ public class TicketProgressBar : MonoBehaviour
         keepTiming = false;
         notifyPad.SetActive(true);
 
+        // Gain the gameobjects
         GameObject statusPanel = notifyPad.transform.GetChild(2).gameObject;
         GameObject ticket_1 = statusPanel.transform.GetChild(0).gameObject;
         GameObject ticket_2 = statusPanel.transform.GetChild(1).gameObject;
@@ -246,7 +256,7 @@ public class TicketProgressBar : MonoBehaviour
         GameObject ticket_4 = statusPanel.transform.GetChild(3).gameObject;
         GameObject finish_btn = statusPanel.transform.GetChild(4).gameObject;
         
-
+        // Fill the bar is filled
         if (fill == true)
         {
             progressSlider.value = 0f;
@@ -293,6 +303,7 @@ public class TicketProgressBar : MonoBehaviour
                 }
             }
 
+            // Display the status to give feedback
             newStatusText.text = "Level " + (currentEvo + 1);
             oldStatusText.text = "Level " + currentEvo;
 
@@ -317,6 +328,7 @@ public class TicketProgressBar : MonoBehaviour
                 nextStatusText.text = "Next Evolution Level: " + (currentEvo + 2);
             }
         }
+        // Bar is not filled
         else if (fill == false)
         {
             progressSlider.value = max;
@@ -332,11 +344,13 @@ public class TicketProgressBar : MonoBehaviour
         }
     }
 
+    // Close panel
     public void ClosePanel()
     {
         keepTiming = true;
         notifyPad.SetActive(false);
 
+        // Once a level is finished
         if (fill == true)
         {
 
@@ -348,11 +362,13 @@ public class TicketProgressBar : MonoBehaviour
                 currentEvo++;
                 once = false;
         }
+        // Once a level is failed
         else if (fill == false)
         {
             max = initialMax;
             currentEvo = 1;
         }
+        // Display the levels
         evolutionLevelText.text = "Level " + currentEvo;
 
         fill = true;

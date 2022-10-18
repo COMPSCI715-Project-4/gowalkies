@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using Random = System.Random;
 
 public class TicketManager : MonoBehaviour
-{
+{   
+    // Variables and Constants
     public GameObject statusPanel;
     public Text confirmText;
     public Button confirmBtn;
@@ -24,6 +25,7 @@ public class TicketManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {   
+        // Gain the tickets objects from the status panel
         ticket_1 = statusPanel.transform.GetChild(0).gameObject;
         ticket_2 = statusPanel.transform.GetChild(1).gameObject;
         ticket_3 = statusPanel.transform.GetChild(2).gameObject;
@@ -32,12 +34,15 @@ public class TicketManager : MonoBehaviour
         ticket_2.GetComponent<Button>().onClick.AddListener(Onclick_2);
         ticket_3.GetComponent<Button>().onClick.AddListener(Onclick_3);
         ticket_4.GetComponent<Button>().onClick.AddListener(Onclick_4);
+        // Add Listener
         confirmBtn.onClick.AddListener(Confirmed);
         cancelBtn.onClick.AddListener(Cancelled);
+        // Add tickets to the wallet
         mytic.Add(ticket_1);
         mytic.Add(ticket_2);
         mytic.Add(ticket_3);
         mytic.Add(ticket_4);
+        // Disappear the tickets
         ticket_1.SetActive(false);
         ticket_2.SetActive(false);
         ticket_3.SetActive(false);
@@ -53,11 +58,14 @@ public class TicketManager : MonoBehaviour
         ticket_3.SetActive(false);
         ticket_4.SetActive(false);
 
+        // Update the tickets
         for (var i = 0; i < TicketProgressBar.gained.Count; i++) 
         {   
             int ticket_num = TicketProgressBar.gained[i];
             mytic[ticket_num-1].SetActive(true);
         }
+
+        // Use the tickets
 
         if (confirm == true)
         {   
@@ -74,40 +82,48 @@ public class TicketManager : MonoBehaviour
 
     }
 
+    // Button is clicked
     void Onclick_1()
     {
         confirmText.text = "Are you sure you want to use ticket 1?";
         remove = 1;
     }
 
+    // Button is clicked
     void Onclick_2()
     {
         confirmText.text = "Are you sure you want to use ticket 2?";
         remove = 2;
     }
 
+    // Button is clicked
     void Onclick_3()
     {
         confirmText.text = "Are you sure you want to use ticket 3?";
         remove = 3;
     }
 
+    // Button is clicked
     void Onclick_4()
     {
         confirmText.text = "Are you sure you want to use ticket 4?";
         remove = 4;
     }
 
+    // Button is clicked
     void Confirmed()
     {
         confirm = true;
     }
+
+    // Button is clicked
 
     void Cancelled()
     {
         confirm = false;
     }
 
+    // Distroy all the tickets
     private void OnDestroy()
     {
         ticket_1.SetActive(false);
